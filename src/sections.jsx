@@ -33,10 +33,12 @@ function Logo({ height = 32, style }) {
 
 // ediV symbol mark (leaf/petal)
 function EdivSymbol({ height = 28, style }) {
+  const cfg = window.EDIV_CONFIG || {};
+  const src = cfg.symbol || "assets/symbol.svg";
   const s = Object.assign({ height, width: "auto", display: "block" }, style || {});
   return (
     <img
-      src="assets/symbol.svg"
+      src={src}
       alt=""
       aria-hidden="true"
       className="brand-symbol"
@@ -114,16 +116,24 @@ function Hero({ t }) {
 
       <div className={`hero-portrait ${inView ? "in" : ""}`}>
         <div className="portrait-frame">
-          <video
-            src="assets/ediv_a_hero.mp4"
-            className="hero-portrait-img"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            aria-label="ediV clinic · model portrait"
-          />
+          {(window.EDIV_CONFIG || {}).heroType === "image" ? (
+            <img
+              src={(window.EDIV_CONFIG || {}).heroSrc}
+              className="hero-portrait-img"
+              alt="ediV clinic · model portrait"
+            />
+          ) : (
+            <video
+              src={((window.EDIV_CONFIG || {}).heroSrc) || "assets/ediv_a_hero.mp4"}
+              className="hero-portrait-img"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              aria-label="ediV clinic · model portrait"
+            />
+          )}
         </div>
         <div className="portrait-label">{t.portraitLabel}</div>
       </div>
