@@ -1,0 +1,18 @@
+# 디자인 에셋 (용량 너무 큼)
+1.interview/
+2.research:direction/
+3.sketch/
+4.proposal/
+mockup/
+*.key
+
+# 환경변수 (시크릿 포함)
+.env
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Claude
+.claude/
