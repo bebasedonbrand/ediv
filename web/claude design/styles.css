@@ -260,7 +260,7 @@ button { font-family: inherit; letter-spacing: inherit; cursor: pointer; }
 /* ---------- HERO ---------- */
 .hero {
   min-height: 100vh;
-  padding: 80px 0 80px;
+  padding: 0;
   display: block;
   position: relative;
 }
@@ -368,17 +368,17 @@ button { font-family: inherit; letter-spacing: inherit; cursor: pointer; }
   content: none;
 }
 .hero-portrait-img {
-  width: 80%;
-  height: 80%;
+  width: min(100%, clamp(560px, 65vw, 900px));
+  height: 100%;
   position: absolute;
   right: 0;
-  top: 10%;
+  top: 0;
   object-fit: cover;
-  object-position: right center;
+  object-position: 72% center;
   display: block;
   background: transparent;
-  -webkit-mask-image: radial-gradient(ellipse 75% 90% at 82% 52%, black 30%, transparent 85%);
-  mask-image: radial-gradient(ellipse 75% 90% at 82% 52%, black 30%, transparent 85%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 18%, black 32%, black 100%);
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 18%, black 32%, black 100%);
   filter: blur(18px);
   opacity: 0;
   transform: scale(1.03);
@@ -887,35 +887,37 @@ button { font-family: inherit; letter-spacing: inherit; cursor: pointer; }
 /* 넓은 화면에서 좁아지기 시작하면 얼굴 쪽으로 포커스 이동 */
 @media (max-width: 1280px) {
   .hero-portrait-img {
-    width: 90%;
-    object-position: 80% center;
-    -webkit-mask-image: radial-gradient(ellipse 80% 90% at 78% 52%, black 30%, transparent 85%);
-    mask-image: radial-gradient(ellipse 80% 90% at 78% 52%, black 30%, transparent 85%);
+    object-position: 76% center;
   }
 }
 
 @media (max-width: 1024px) {
   .hero-portrait-img {
-    width: 100%;
-    object-position: 76% center;
-    -webkit-mask-image: radial-gradient(ellipse 88% 90% at 74% 52%, black 30%, transparent 85%);
-    mask-image: radial-gradient(ellipse 88% 90% at 74% 52%, black 30%, transparent 85%);
+    width: min(100%, clamp(480px, 80vw, 800px));
+    object-position: 72% center;
   }
 }
 
 @media (max-width: 960px) {
   .hero {
-    padding: 120px 24px 60px;
+    padding: 0;
   }
-  .hero-copy { position: static; transform: none; max-width: 100%; margin-bottom: 24px; }
-  .hero-portrait { order: -1; max-width: 100%; aspect-ratio: 4/5; max-height: none; }
+  .hero-copy {
+    position: absolute;
+    top: auto;
+    bottom: 10%;
+    left: 24px;
+    transform: none;
+    max-width: 100%;
+  }
+  .hero-portrait { max-width: 100%; aspect-ratio: unset; height: 100vh; }
   .hero-portrait-img {
     width: 100%;
     height: 100%;
     top: 0;
-    object-position: 72% center;
-    -webkit-mask-image: radial-gradient(ellipse 95% 88% at 68% 52%, black 30%, transparent 85%);
-    mask-image: radial-gradient(ellipse 95% 88% at 68% 52%, black 30%, transparent 85%);
+    object-position: 68% center;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.4) 10%, black 25%, black 100%);
+    mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.4) 10%, black 25%, black 100%);
   }
   .philosophy, .editorial, .tagline-band, .visit, .foot { padding-left: 24px; padding-right: 24px; }
   .philosophy-inner { grid-template-columns: 1fr; gap: 24px; }
