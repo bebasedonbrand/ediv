@@ -1,4 +1,10 @@
 /* global window */
+
+function _cardSrc(i, fallback) {
+  const cfg = window.EDIV_CONFIG;
+  return (cfg && cfg.cards && cfg.cards[i]) || fallback;
+}
+
 // Copy in KO / EN
 const COPY = {
   ko: {
@@ -30,19 +36,19 @@ const COPY = {
         num: "01",
         title: "높은 기준이 좋은 결과를 만듭니다.",
         body: "경과가 살아나는 시간, 나를 진심으로 이해하는 무심한 손길.",
-        img: { label: "M-mark close-up", cls: "ph", src: "assets/card-01.jpg?v=2" },
+        img: { label: "M-mark close-up", cls: "ph", src: _cardSrc(0, "assets/card-01.jpg") },
       },
       {
         num: "02",
         title: "인상에서 차이를 만드는 곳",
         body: "당신의 결과 인상을 읽고, 섬세하게 설계합니다.",
-        img: { label: "Model · side profile", cls: "ph-2", src: "assets/card-02.png" },
+        img: { label: "Model · side profile", cls: "ph-2", src: _cardSrc(1, "assets/card-02.png") },
       },
       {
         num: "03",
         title: "기록이 쌓이면 인상이 달라집니다.",
         body: "오늘 남긴 한 장이 내일의 표정이 됩니다.\n에디브는 기록으로 기억됩니다.",
-        img: { label: "Archive · ediV volume", cls: "ph-3", src: "assets/card-03.png" },
+        img: { label: "Archive · ediV volume", cls: "ph-3", src: _cardSrc(2, "assets/card-03.png") },
       },
     ],
     taglineEyebrow: "\n",
@@ -97,19 +103,19 @@ const COPY = {
         num: "01",
         title: "A high standard makes a fine result.",
         body: "Time in which healing surfaces, an unhurried hand that listens to you.",
-        img: { label: "M-mark close-up", cls: "ph", src: "assets/card-01.jpg?v=2" },
+        img: { label: "M-mark close-up", cls: "ph", src: _cardSrc(0, "assets/card-01.jpg") },
       },
       {
         num: "02",
         title: "Where difference becomes impression.",
         body: "We read your grain and compose it with care.",
-        img: { label: "Model · side profile", cls: "ph-2", src: "assets/card-02.png" },
+        img: { label: "Model · side profile", cls: "ph-2", src: _cardSrc(1, "assets/card-02.png") },
       },
       {
         num: "03",
         title: "Impression shifts, as records accrue.",
         body: "A frame kept today becomes tomorrow's expression. ediV remembers through the record.",
-        img: { label: "Archive · ediV volume", cls: "ph-3", src: "assets/card-03.png" },
+        img: { label: "Archive · ediV volume", cls: "ph-3", src: _cardSrc(2, "assets/card-03.png") },
       },
     ],
     taglineEyebrow: "\n",
