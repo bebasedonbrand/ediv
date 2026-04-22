@@ -10,112 +10,101 @@
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --cream:  #f7f4eb;
-  --brown:  #674748;
-  --ink:    #2b1c1c;
-  --muted:  rgba(103,71,72,0.55);
-  --white:  #ffffff;
+  --brown:   #674748;
+  --brown-d: #4a3132;
+  --pink:    #fe2dde;
+  --cream:   #f5f1e8;
+  --white:   #ffffff;
+  --ink:     #1a081a;
   --font-ko: 'Jeju Myeongjo', 'KoPubWorld Batang', serif;
   --font-en: 'Cormorant Garamond', Georgia, serif;
-  --track:  0.075em;
-  /* pattern.svg inlined as data URI */
-  --pattern-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 109.95 108.04'%3E%3Cdefs%3E%3Cstyle%3E.c%7Bfill:none%3Bstroke:%23674748%3Bstroke-miterlimit:10%3Bstroke-width:.08px%7D%3C/style%3E%3C/defs%3E%3Cpath class='c' d='M109.75%2C47.01C82.96%2C46.73%2C63.72%2C30.07%2C57.2.02'/%3E%3Cpath class='c' d='M66.06%2C74.91c13.43-9.34%2C29.41-13.16%2C43.88-13.16'/%3E%3Cpath class='c' d='M.2%2C61.04c26.79.28%2C46.03%2C16.93%2C52.55%2C46.98'/%3E%3Cpath class='c' d='M43.88%2C33.13c-13.43%2C9.34-29.41%2C13.16-43.88%2C13.16'/%3E%3C/svg%3E");
+  --track:   0.075em;
 }
 html { scroll-behavior: smooth; }
-body { font-family: var(--font-ko); color: var(--ink); background: var(--cream); -webkit-font-smoothing: antialiased; }
+body {
+  font-family: var(--font-ko); color: var(--ink);
+  background: var(--white); -webkit-font-smoothing: antialiased;
+}
 
-/* ── NAV ──────────────────────────────────────────────
-   Default: transparent, logo/links in #674748
-   Scrolled: #674748 bar slides in from top, text #f7f4eb
-────────────────────────────────────────────────────── */
+/* ── NAV ──────────────────────────────────────────────── */
 .nav-b {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 28px 64px;
-  transition: padding 0.4s;
+  padding: 32px 64px;
+  transition: background 0.45s, padding 0.4s;
 }
-/* slide-in bar via pseudo element */
-.nav-b::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: var(--brown);
-  transform: translateY(-100%);
-  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: -1;
+.nav-b.scrolled {
+  padding: 18px 64px;
+  background: rgba(103,71,72,0.97);
+  backdrop-filter: blur(12px);
 }
-.nav-b.scrolled { padding: 18px 64px; }
-.nav-b.scrolled::before { transform: translateY(0); }
-
-/* logo */
 .nav-b .b-logo img {
   height: 26px; width: auto; display: block;
-  /* black → #674748 brown */
-  filter: invert(29%) sepia(16%) saturate(800%) hue-rotate(314deg) brightness(80%);
-  transition: filter 0.3s;
+  filter: brightness(0) invert(1) opacity(0.9); transition: opacity 0.3s;
 }
-.nav-b.scrolled .b-logo img {
-  /* black → #f7f4eb cream */
-  filter: brightness(0) invert(1) sepia(0.06) saturate(2) brightness(0.97);
-}
-
-/* nav links */
 .nav-b ul { display: flex; gap: 40px; list-style: none; }
 .nav-b ul a {
   font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
-  text-decoration: none; color: var(--muted); transition: color 0.3s;
+  text-decoration: none; color: rgba(255,255,255,0.6); transition: color 0.2s;
 }
-.nav-b.scrolled ul a { color: rgba(247,244,235,0.75); }
-.nav-b ul a:hover { color: var(--brown); }
-.nav-b.scrolled ul a:hover { color: var(--cream); }
-
-/* lang toggle */
+.nav-b ul a:hover { color: var(--cream); }
 .nav-lang-b { display: flex; align-items: center; gap: 6px; }
 .nav-lang-b button {
   background: none; border: none; font-family: var(--font-ko);
   font-size: 11px; letter-spacing: 0.1em; cursor: pointer;
-  color: var(--muted); transition: color 0.3s; padding: 0;
+  color: rgba(255,255,255,0.38); transition: color 0.2s; padding: 0;
 }
-.nav-lang-b button.on { color: var(--brown); }
-.nav-b.scrolled .nav-lang-b button { color: rgba(247,244,235,0.55); }
-.nav-b.scrolled .nav-lang-b button.on { color: var(--cream); }
-.nav-lang-b .sep { font-size: 11px; color: rgba(103,71,72,0.25); transition: color 0.3s; }
-.nav-b.scrolled .nav-lang-b .sep { color: rgba(247,244,235,0.25); }
+.nav-lang-b button.on { color: rgba(255,255,255,0.9); }
+.nav-lang-b .sep { color: rgba(255,255,255,0.18); font-size: 11px; }
 
-/* ── HERO · full-screen video ─────────────────────── */
+.nav-b-symbol {
+  margin-left: 28px; padding-left: 28px;
+  border-left: 1px solid rgba(255,255,255,0.14);
+  display: flex; align-items: center;
+}
+.nav-b-symbol img {
+  height: 18px; width: auto; display: block;
+  filter: brightness(0) invert(1) opacity(0.6);
+  transition: opacity 0.3s;
+}
+.nav-b.scrolled .nav-b-symbol { border-left-color: rgba(255,255,255,0.14); }
+.nav-b.scrolled .nav-b-symbol img { opacity: 0.75; }
+
+/* ── HERO · full-screen video ─────────────────────────── */
 .hero-b {
-  position: relative;
-  min-height: 100vh;
-  overflow: hidden;
-  background: var(--cream);
+  position: relative; min-height: 100vh;
+  overflow: hidden; background: var(--brown-d);
 }
 .hero-b video {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover; object-position: top center;
-  z-index: 0;
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center top; z-index: 0;
 }
-/* left-side gradient so text stays legible */
 .hero-b-overlay {
   position: absolute; inset: 0; z-index: 1;
   background: linear-gradient(
-    to right,
-    rgba(247,244,235,0.82) 0%,
-    rgba(247,244,235,0.55) 40%,
-    rgba(247,244,235,0.08) 65%,
-    transparent 80%
+    108deg,
+    rgba(74,49,50,0.93) 0%,
+    rgba(103,71,72,0.78) 28%,
+    rgba(103,71,72,0.32) 56%,
+    transparent 74%
   );
 }
 .hero-b-copy {
   position: relative; z-index: 2;
   display: flex; flex-direction: column; justify-content: flex-end;
-  padding: 160px 64px 100px;
-  min-height: 100vh;
-  max-width: 52%;
+  padding: 160px 64px 100px; min-height: 100vh; max-width: 54%;
 }
+.hero-b-eyebrow {
+  font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase;
+  color: rgba(245,241,232,0.45); margin-bottom: 36px;
+  opacity: 0; transform: translateY(12px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.hero-b-eyebrow.in { opacity: 1; transform: none; }
 .hero-b h1 {
-  font-family: var(--font-ko); font-size: clamp(28px, 2.8vw, 50px);
+  font-family: var(--font-ko); font-size: clamp(28px, 3vw, 52px);
   font-weight: 400; line-height: 1.45; letter-spacing: var(--track);
-  color: var(--brown); margin-bottom: 44px;
+  color: var(--cream); margin-bottom: 44px;
 }
 .hero-b h1 .h1-line {
   display: block; opacity: 0; transform: translateY(20px);
@@ -124,104 +113,253 @@ body { font-family: var(--font-ko); color: var(--ink); background: var(--cream);
 .hero-b h1 .h1-line.in { opacity: 1; transform: none; }
 .hero-b-sub {
   font-size: 13px; line-height: 2.2; letter-spacing: var(--track);
-  color: var(--muted); white-space: pre-line; max-width: 300px;
+  color: rgba(245,241,232,0.55); white-space: pre-line; max-width: 280px;
   opacity: 0; transform: translateY(16px);
   transition: opacity 0.8s ease 0.5s, transform 0.8s ease 0.5s;
 }
 .hero-b-sub.in { opacity: 1; transform: none; }
-.hero-b-portrait-label {
-  position: absolute; bottom: 36px; right: 32px; z-index: 3;
-  font-size: 10px; letter-spacing: 0.16em;
-  color: rgba(247,244,235,0.5); writing-mode: vertical-rl;
+.hero-b-scroll {
+  position: absolute; bottom: 44px; left: 64px; z-index: 2;
+  display: flex; align-items: center; gap: 12px;
+  opacity: 0; transition: opacity 0.8s ease 1.1s;
+}
+.hero-b-scroll.in { opacity: 1; }
+.hero-b-scroll-line { width: 36px; height: 1px; background: rgba(245,241,232,0.3); }
+.hero-b-scroll-label {
+  font-size: 9px; letter-spacing: 0.26em; text-transform: uppercase;
+  color: rgba(245,241,232,0.3);
+}
+.hero-b-label {
+  position: absolute; bottom: 36px; right: 40px; z-index: 2;
+  font-family: var(--font-en); font-size: 10px; letter-spacing: 0.14em;
+  color: rgba(245,241,232,0.25); writing-mode: vertical-rl;
 }
 
-/* ── PATTERN background (sections below hero) ─────── */
-.pattern-section {
-  position: relative;
+/* ── SPREAD · editorial floating images ───────────────── */
+.spread-b {
+  background: var(--cream);
+  padding: 96px 64px 108px;
 }
-.pattern-section::before {
-  content: '';
-  position: absolute; inset: 0;
-  background-image: var(--pattern-url);
-  background-size: 140vw auto;
-  background-repeat: no-repeat;
-  background-position: center center;
-  opacity: 0.22;
-  pointer-events: none;
-  z-index: 0;
+.spread-b-head {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 72px;
 }
-.pattern-section > * { position: relative; z-index: 1; }
+.spread-b-vol {
+  font-family: var(--font-en); font-size: 10px; letter-spacing: 0.22em;
+  color: rgba(103,71,72,0.38); text-transform: uppercase;
+}
+.spread-b-rule { flex: 1; height: 1px; background: rgba(103,71,72,0.12); }
+.spread-b-date {
+  font-size: 10px; letter-spacing: 0.18em; color: rgba(103,71,72,0.38);
+}
+.spread-b-body {
+  display: grid; grid-template-columns: 54% 46%;
+  align-items: flex-start;
+}
+.spread-b-left img {
+  width: 88%; display: block;
+  aspect-ratio: 4/3; object-fit: cover;
+}
+.spread-b-right {
+  padding-top: 18%;
+  display: flex; flex-direction: column; align-items: flex-end;
+}
+.spread-b-right img {
+  width: 68%; display: block;
+  aspect-ratio: 3/4; object-fit: cover;
+}
+.spread-b-caption {
+  margin-top: 36px; padding-right: 6%;
+  text-align: right;
+}
+.spread-b-caption p {
+  font-size: 11px; line-height: 2; letter-spacing: var(--track);
+  color: rgba(103,71,72,0.55); white-space: pre-line;
+}
+.spread-b-caption span {
+  display: block; font-family: var(--font-en); font-size: 9px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(103,71,72,0.3); margin-top: 12px;
+}
 
-/* ── DIVIDER ──────────────────────────────────────── */
-.divider-b {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--brown) 30%, var(--brown) 70%, transparent);
-  opacity: 0.15; margin: 0 64px;
+/* ── CARE PANEL · 석간주 full-width ──────────────────── */
+.panel-b {
+  display: grid; grid-template-columns: 44% 56%;
+  background: var(--brown); min-height: 82vh;
 }
-
-/* ── PHILOSOPHY ───────────────────────────────────── */
-.phil-b { padding: 160px 64px; max-width: 1200px; margin: 0 auto; }
-.phil-b-kw {
-  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--brown); margin-bottom: 64px;
+.panel-b-text {
+  padding: 80px 64px;
+  display: flex; flex-direction: column; justify-content: space-between;
 }
-.phil-b-body {
-  font-family: var(--font-ko); font-size: clamp(22px, 2.8vw, 38px);
-  font-weight: 400; line-height: 1.9; letter-spacing: var(--track);
-  color: var(--ink); white-space: pre-line;
+.panel-b-label {
+  font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: rgba(245,241,232,0.32);
 }
-
-/* ── EDITORIAL ────────────────────────────────────── */
-.editorial-b { padding: 80px 64px 160px; }
-.editorial-b-kw {
-  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--brown); margin-bottom: 64px;
+.panel-b-main { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 52px; }
+.panel-b-headline {
+  font-family: var(--font-ko); font-size: clamp(26px, 2.8vw, 46px);
+  font-weight: 400; line-height: 1.6; letter-spacing: var(--track);
+  color: var(--cream); white-space: pre-line; margin-bottom: 32px;
 }
-.editorial-b-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; }
-.card-b { display: flex; flex-direction: column; }
-.card-b-img-wrap {
-  aspect-ratio: 3/4; overflow: hidden; margin-bottom: 28px;
-  background: #e5e0d2;
+.panel-b-body {
+  font-size: 12px; line-height: 2.2; letter-spacing: var(--track);
+  color: rgba(245,241,232,0.42); max-width: 240px; margin-bottom: 40px;
+  white-space: pre-line;
 }
-.card-b-img-wrap img {
+.panel-b-cta {
+  display: inline-flex; align-items: center; gap: 14px;
+  border: 1px solid rgba(245,241,232,0.28); color: var(--cream);
+  background: none; padding: 14px 28px; width: fit-content;
+  font-family: var(--font-ko); font-size: 11px; letter-spacing: 0.15em;
+  cursor: pointer; transition: border-color 0.2s, background 0.2s;
+}
+.panel-b-cta:hover { border-color: rgba(245,241,232,0.7); background: rgba(245,241,232,0.08); }
+.panel-b-img { position: relative; overflow: hidden; }
+.panel-b-img img {
   width: 100%; height: 100%; object-fit: cover; display: block;
-  transition: transform 0.7s ease;
+  transition: transform 1s ease;
 }
-.card-b:hover .card-b-img-wrap img { transform: scale(1.05); }
-.card-b-num { font-size: 10px; letter-spacing: 0.2em; color: var(--brown); margin-bottom: 14px; }
-.card-b-title {
-  font-family: var(--font-ko); font-size: 16px; font-weight: 400;
-  line-height: 1.7; letter-spacing: var(--track); color: var(--ink);
-  margin-bottom: 12px; white-space: pre-line;
+.panel-b:hover .panel-b-img img { transform: scale(1.03); }
+
+/* ── MANIFESTO · deep 석간주 ─────────────────────────── */
+.manifesto-b {
+  background: var(--brown-d); padding: 140px 64px;
+  position: relative; overflow: hidden;
 }
-.card-b-body {
-  font-size: 12.5px; line-height: 2.1; letter-spacing: var(--track);
-  color: var(--muted); white-space: pre-line;
+.manifesto-b::after {
+  content: '기억';
+  position: absolute; right: -0.05em; bottom: -0.2em;
+  font-family: var(--font-ko); font-size: 340px; line-height: 1;
+  color: rgba(255,255,255,0.025); pointer-events: none; user-select: none;
+}
+.manifesto-b-kw {
+  display: flex; align-items: center; gap: 14px;
+  font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: rgba(245,241,232,0.22); margin-bottom: 56px;
+}
+.manifesto-b-kw::before {
+  content: ''; display: block; width: 20px; height: 1px; background: currentColor;
+}
+.manifesto-b-text {
+  font-family: var(--font-ko); font-size: clamp(30px, 4.2vw, 66px);
+  font-weight: 400; line-height: 1.6; letter-spacing: var(--track);
+  color: var(--cream); white-space: pre-line; max-width: 860px;
+}
+.manifesto-b-text em {
+  font-style: italic; font-family: var(--font-en);
+  color: rgba(245,241,232,0.38);
 }
 
-/* ── TAGLINE ──────────────────────────────────────── */
-.tagline-b { background: var(--brown); padding: 160px 64px; }
+/* ── FEATURE · 2-col editorial ────────────────────────── */
+.feature-b {
+  background: var(--white); padding: 120px 64px;
+}
+.feature-b-header {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  border-bottom: 1px solid rgba(103,71,72,0.1);
+  padding-bottom: 22px; margin-bottom: 64px;
+}
+.feature-b-kw {
+  font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--brown);
+}
+.feature-b-count { font-family: var(--font-en); font-size: 11px; letter-spacing: 0.14em; color: rgba(103,71,72,0.35); }
+/* big left / stack right */
+.feature-b-grid {
+  display: grid; grid-template-columns: 52% 48%; gap: 40px; align-items: start;
+}
+.feature-b-main { position: relative; }
+.feature-b-main-img {
+  width: 100%; aspect-ratio: 2/3; overflow: hidden; background: #e2dbd2; display: block;
+}
+.feature-b-main-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.8s ease; }
+.feature-b-main:hover .feature-b-main-img img { transform: scale(1.04); }
+.feature-b-main-overlay {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent 30%, rgba(26,8,26,0.65));
+  padding: 60px 36px 36px;
+}
+.feature-b-main-num { font-size: 9px; letter-spacing: 0.22em; color: rgba(245,241,232,0.5); margin-bottom: 10px; }
+.feature-b-main-title {
+  font-family: var(--font-ko); font-size: clamp(16px, 1.6vw, 22px);
+  font-weight: 400; line-height: 1.6; letter-spacing: var(--track);
+  color: var(--cream); white-space: pre-line;
+}
+/* right stack */
+.feature-b-stack { display: flex; flex-direction: column; gap: 40px; padding-top: 56px; }
+.feature-b-sub { display: flex; flex-direction: column; gap: 24px; }
+.feature-b-sub-img {
+  width: 100%; aspect-ratio: 4/3; overflow: hidden; background: #e8e0d5;
+}
+.feature-b-sub-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.8s ease; }
+.feature-b-sub:hover .feature-b-sub-img img { transform: scale(1.04); }
+.feature-b-sub-meta {
+  display: flex; align-items: center; gap: 10px;
+}
+.feature-b-sub-num { font-size: 9px; letter-spacing: 0.2em; color: rgba(103,71,72,0.5); }
+.feature-b-sub-tag {
+  font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--pink); border: 1px solid rgba(254,45,222,0.22); padding: 2px 7px;
+}
+.feature-b-sub-title {
+  font-family: var(--font-ko); font-size: 14px; font-weight: 400;
+  line-height: 1.7; letter-spacing: var(--track); color: var(--ink);
+  white-space: pre-line;
+}
+.feature-b-sub-body { font-size: 12px; line-height: 2; letter-spacing: var(--track); color: rgba(103,71,72,0.6); white-space: pre-line; }
+
+/* quote within feature-b-stack */
+.feature-b-quote {
+  border-top: 1px solid rgba(103,71,72,0.12);
+  padding-top: 32px;
+}
+.feature-b-quote p {
+  font-family: var(--font-en); font-style: italic;
+  font-size: clamp(18px, 1.8vw, 26px); line-height: 1.6; letter-spacing: 0.01em;
+  color: var(--brown);
+}
+
+/* ── TAGLINE BAND ─────────────────────────────────────── */
+.tagline-b { background: var(--brown); padding: 140px 64px; }
 .tagline-b-inner { max-width: 1100px; margin: 0 auto; }
 .tagline-b-kw {
-  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
-  color: rgba(247,244,235,0.4); margin-bottom: 48px;
+  font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: rgba(245,241,232,0.28); margin-bottom: 48px;
 }
 .tagline-b-text {
-  font-family: var(--font-ko); font-size: clamp(28px, 4vw, 60px);
+  font-family: var(--font-ko); font-size: clamp(30px, 4.4vw, 68px);
   font-weight: 400; line-height: 1.5; letter-spacing: var(--track);
   color: var(--cream); white-space: pre-line; margin-bottom: 36px;
 }
-.tagline-b-sub {
-  font-size: 13px; line-height: 2; letter-spacing: var(--track);
-  color: rgba(247,244,235,0.45);
-}
+.tagline-b-text em { font-style: italic; font-family: var(--font-en); color: rgba(245,241,232,0.38); }
+.tagline-b-sub { font-size: 13px; line-height: 2; letter-spacing: var(--track); color: rgba(245,241,232,0.36); }
 
-/* ── VISIT ────────────────────────────────────────── */
-.visit-b { padding: 160px 64px; }
+/* ── PROCEDURES ───────────────────────────────────────── */
+.treat-b { padding: 120px 64px; background: var(--white); }
+.treat-b-inner { max-width: 1100px; margin: 0 auto; }
+.treat-b-header {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  border-bottom: 1px solid rgba(103,71,72,0.1); padding-bottom: 22px; margin-bottom: 0;
+}
+.treat-b-kw { font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--brown); }
+.treat-b-note { font-size: 11px; letter-spacing: var(--track); color: rgba(103,71,72,0.35); }
+.treat-b-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 24px 0; border-bottom: 1px solid rgba(103,71,72,0.08);
+  transition: padding 0.2s;
+}
+.treat-b-item:hover { padding-left: 8px; }
+.treat-b-name {
+  font-family: var(--font-ko); font-size: 15px; font-weight: 400;
+  letter-spacing: var(--track); color: var(--ink); transition: color 0.2s;
+}
+.treat-b-item:hover .treat-b-name { color: var(--brown); }
+.treat-b-tag { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--pink); opacity: 0.65; }
+
+/* ── VISIT ────────────────────────────────────────────── */
+.visit-b { background: var(--cream); padding: 140px 64px; }
 .visit-b-inner {
   max-width: 1100px; margin: 0 auto;
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 100px; align-items: center;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center;
 }
 .visit-b h2 {
   font-family: var(--font-ko); font-size: clamp(26px, 3.2vw, 48px);
@@ -230,20 +368,18 @@ body { font-family: var(--font-ko); color: var(--ink); background: var(--cream);
 }
 .visit-b-addr {
   font-size: 13px; line-height: 2.4; letter-spacing: var(--track);
-  color: var(--muted); white-space: pre-line; margin-bottom: 44px;
+  color: rgba(103,71,72,0.65); white-space: pre-line; margin-bottom: 44px;
 }
 .visit-b-cta {
   display: inline-flex; align-items: center; gap: 14px;
-  background: var(--brown); color: var(--cream);
-  border: none; padding: 16px 36px;
+  background: var(--brown); color: var(--cream); border: none; padding: 16px 36px;
   font-family: var(--font-ko); font-size: 12px; letter-spacing: 0.15em;
-  cursor: pointer; transition: opacity 0.2s;
+  cursor: pointer; transition: background 0.25s;
 }
-.visit-b-cta:hover { opacity: 0.8; }
+.visit-b-cta:hover { background: var(--brown-d); }
 .visit-b-map {
   aspect-ratio: 1; background: rgba(103,71,72,0.04);
-  border: 1px solid rgba(103,71,72,0.15);
-  position: relative; overflow: hidden;
+  border: 1px solid rgba(103,71,72,0.14); position: relative; overflow: hidden;
 }
 .map-b-grid {
   position: absolute; inset: 0;
@@ -252,28 +388,22 @@ body { font-family: var(--font-ko); color: var(--ink); background: var(--cream);
     linear-gradient(90deg, rgba(103,71,72,0.07) 1px, transparent 1px);
   background-size: 44px 44px;
 }
-.map-b-pin {
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%, -60%); text-align: center;
-}
+.map-b-pin { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -60%); text-align: center; }
 .map-b-dot {
-  width: 10px; height: 10px; border-radius: 50%;
-  background: var(--brown); margin: 0 auto 10px;
-  box-shadow: 0 0 0 8px rgba(103,71,72,0.12);
+  width: 10px; height: 10px; border-radius: 50%; background: var(--brown);
+  margin: 0 auto 10px; box-shadow: 0 0 0 8px rgba(103,71,72,0.14);
 }
 .map-b-label { font-size: 10px; letter-spacing: 0.16em; color: var(--brown); white-space: nowrap; }
 
-/* ── FOOTER ───────────────────────────────────────── */
+/* ── FOOTER ───────────────────────────────────────────── */
 .foot-b { background: var(--ink); padding: 80px 64px 40px; }
 .foot-b-inner {
-  display: grid; grid-template-columns: 2.2fr 1fr 1fr 1fr;
-  gap: 64px; padding-bottom: 64px;
-  border-bottom: 1px solid rgba(255,255,255,0.07); margin-bottom: 32px;
+  display: grid; grid-template-columns: 2.2fr 1fr 1fr 1fr; gap: 64px;
+  padding-bottom: 64px; border-bottom: 1px solid rgba(255,255,255,0.07); margin-bottom: 32px;
 }
 .foot-b-brand-logo img {
-  height: 20px; width: auto; display: block;
-  filter: brightness(0) invert(1) sepia(0.06) saturate(2) brightness(0.97);
-  opacity: 0.75; margin-bottom: 24px;
+  height: 18px; width: auto; display: block;
+  filter: brightness(0) invert(1); opacity: 0.7; margin-bottom: 24px;
 }
 .foot-b-desc {
   font-size: 12px; line-height: 2.1; letter-spacing: var(--track);
@@ -281,42 +411,47 @@ body { font-family: var(--font-ko); color: var(--ink); background: var(--cream);
 }
 .foot-b-social { display: flex; gap: 18px; }
 .foot-b-social a { color: rgba(255,255,255,0.2); text-decoration: none; transition: color 0.2s; }
-.foot-b-social a:hover { color: rgba(247,244,235,0.7); }
+.foot-b-social a:hover { color: rgba(245,241,232,0.7); }
 .foot-b-col h4 {
-  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
-  color: rgba(255,255,255,0.22); margin-bottom: 24px;
+  font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(255,255,255,0.2); margin-bottom: 24px;
 }
 .foot-b-col ul { list-style: none; }
 .foot-b-col li { margin-bottom: 12px; }
-.foot-b-col a {
-  font-size: 12px; letter-spacing: var(--track);
-  color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s;
-}
+.foot-b-col a { font-size: 12px; letter-spacing: var(--track); color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
 .foot-b-col a:hover { color: var(--cream); }
 .foot-b-bottom {
   display: flex; justify-content: space-between; align-items: center;
   font-size: 11px; letter-spacing: var(--track); color: rgba(255,255,255,0.15);
 }
 
-/* ── REVEAL ───────────────────────────────────────── */
+/* ── REVEAL ───────────────────────────────────────────── */
 .rv { opacity: 0; transform: translateY(28px); transition: opacity 0.85s ease, transform 0.85s ease; }
 .rv.in { opacity: 1; transform: none; }
 
-/* ── RESPONSIVE ───────────────────────────────────── */
-@media (max-width: 860px) {
+/* ── RESPONSIVE ───────────────────────────────────────── */
+@media (max-width: 900px) {
   .nav-b, .nav-b.scrolled { padding: 20px 28px; }
   .nav-b ul { display: none; }
-  .hero-b-copy { padding: 120px 28px 60px; max-width: 80%; }
-  .hero-b-overlay { background: linear-gradient(to right, rgba(247,244,235,0.88) 0%, rgba(247,244,235,0.4) 60%, transparent 100%); }
-  .phil-b { padding: 80px 28px; }
-  .editorial-b { padding: 60px 28px 100px; }
-  .editorial-b-grid { grid-template-columns: 1fr; }
+  .hero-b-copy { padding: 120px 28px 80px; max-width: 90%; }
+  .hero-b-scroll { left: 28px; }
+  .spread-b { padding: 72px 28px 80px; }
+  .spread-b-body { grid-template-columns: 1fr; gap: 28px; }
+  .spread-b-right { padding-top: 0; align-items: flex-start; }
+  .spread-b-right img { width: 60%; }
+  .panel-b { grid-template-columns: 1fr; }
+  .panel-b-img { min-height: 55vw; }
+  .panel-b-text { padding: 64px 28px; }
+  .manifesto-b { padding: 80px 28px; }
+  .feature-b { padding: 80px 28px 100px; }
+  .feature-b-grid { grid-template-columns: 1fr; }
+  .feature-b-stack { padding-top: 0; }
   .tagline-b { padding: 80px 28px; }
+  .treat-b { padding: 80px 28px; }
   .visit-b { padding: 80px 28px; }
   .visit-b-inner { grid-template-columns: 1fr; gap: 48px; }
   .foot-b { padding: 60px 28px 32px; }
   .foot-b-inner { grid-template-columns: 1fr 1fr; gap: 40px; }
-  .divider-b { margin: 0 28px; }
 }
 </style>
 </head>
@@ -330,21 +465,65 @@ const { useState, useEffect, useRef } = React;
 
 const COPY_B = {
   ko: {
-    nav: [["홈","#hero"], ["소개","#philosophy"], ["진료안내","#editorial"], ["예약","#visit"]],
+    nav: [["홈","#hero"], ["소개","#spread"], ["진료안내","#feature"], ["예약","#visit"]],
+    eyebrow: "에디브클리닉",
     h1: ["결을 읽고,", "인상을 설계합니다."],
     heroSub: "기록하는 곳, 기억하는 곳.\n에디브는 결과 인상을 읽고 기록합니다.\n기록이 쌓이면, 변화가 보입니다.",
-    portraitLabel: "Portrait — No. 014",
-    philKw: "Philosophy",
-    philBody: "기록하는 곳, 기억하는 곳.\n에디브는 결과 인상을 읽고 기록합니다.\n오늘 쌓은 한겹이 내일의 모습이 됩니다.\n기록이 쌓이면, 인상이 달라집니다.",
-    editorialKw: "Care",
+    heroLabel: "Portrait — No. 014",
+    scrollLabel: "Scroll",
+
+    spreadVol: "Vol. 01",
+    spreadDate: "2026",
+    spreadCaption: "피부는 기억합니다.\n에디브는 그 기억을 기록으로 남깁니다.",
+    spreadCaptionLabel: "ediV · Archive",
+
+    panelLabel: "Care Gallery",
+    panelHeadline: "높은 기준이\n좋은 결과를\n만듭니다.",
+    panelBody: "경과가 살아나는 시간,\n나를 진심으로 이해하는\n무심한 손길.",
+    panelCta: "진료 안내",
+
+    manifestoKw: "Manifesto",
+    manifestoText: "우리는 덜어냅니다.\n그리고 채웁니다.\n기록한 결 위에,\n오직 당신만의 인상을 설계합니다.",
+
+    featureKw: "Care",
+    featureCount: "003",
     cards: [
-      { num: "01", title: "높은 기준이\n좋은 결과를 만듭니다.", body: "경과가 살아나는 시간,\n나를 진심으로 이해하는 무심한 손길.", img: "assets/b/card-01.png" },
-      { num: "02", title: "인상에서\n차이를 만드는 곳", body: "당신의 결과 인상을 읽고,\n섬세하게 설계합니다.", img: "assets/b/card-02.jpg" },
-      { num: "03", title: "기록이 쌓이면\n인상이 달라집니다.", body: "오늘 남긴 한 장이 내일의 표정이 됩니다.\n에디브는 기록으로 기억됩니다.", img: "assets/b/card-03.png" },
+      {
+        num: "01", tag: "Lifting",
+        title: "결을 다듬는\n가장 정직한 방법",
+        body: "경과가 살아나는 시간,\n나를 진심으로 이해하는 손길.",
+        img: "assets/b/card-01.png",
+      },
+      {
+        num: "02", tag: "Laser",
+        title: "인상에서\n차이를 만드는 곳",
+        body: "당신의 결과 인상을 읽고,\n섬세하게 설계합니다.",
+        img: "assets/b/card-02.jpg",
+      },
+      {
+        num: "03", tag: "Care",
+        title: "기록이 쌓이면\n인상이 달라집니다.",
+        body: "오늘 남긴 한 장이 내일의 표정이 됩니다.",
+        img: "assets/b/card-03.png",
+      },
     ],
+    featureQuote: "결과보다 경과를, 인상보다 기록을.",
+
     taglineKw: "ediV clinic",
     tagline: "나를 위한 가장\n섬세한 시간",
     taglineSub: "에디브는 미학과 휴식의 기준부터 세웁니다.",
+
+    treatKw: "Procedures",
+    treatNote: "전 시술 사전 상담 필수",
+    treatments: [
+      { name: "피부 리프팅", tag: "Lifting" },
+      { name: "색소 레이저", tag: "Laser" },
+      { name: "보톡스 · 필러", tag: "Injectables" },
+      { name: "피부 재생 케어", tag: "Regeneration" },
+      { name: "스킨 부스터", tag: "Booster" },
+      { name: "프리미엄 페이셜", tag: "Facial" },
+    ],
+
     visitTitle: "에디브클리닉에\n오시는 길",
     visitAddr: "서울특별시 강남구 청담동 94-6 3층\n+82 2 0000 0000 · hello@ediv.clinic",
     visitCta: "길찾기",
@@ -357,21 +536,65 @@ const COPY_B = {
     footCopy: "© 2026 ediV clinic · All rights reserved.",
   },
   en: {
-    nav: [["Home","#hero"], ["About","#philosophy"], ["Care","#editorial"], ["Book","#visit"]],
+    nav: [["Home","#hero"], ["About","#spread"], ["Care","#feature"], ["Book","#visit"]],
+    eyebrow: "ediV clinic",
     h1: ["Read the grain,", "design the impression."],
     heroSub: "A place to record, a place to remember.\nediV reads the grain and the impression.\nAs records accrue, change becomes visible.",
-    portraitLabel: "Portrait — No. 014",
-    philKw: "Philosophy",
-    philBody: "We take away. Then we fill.\nUpon the grain we've recorded,\nwe design an impression that is yours alone.",
-    editorialKw: "Care",
+    heroLabel: "Portrait — No. 014",
+    scrollLabel: "Scroll",
+
+    spreadVol: "Vol. 01",
+    spreadDate: "2026",
+    spreadCaption: "Skin remembers.\nediV makes the memory a record.",
+    spreadCaptionLabel: "ediV · Archive",
+
+    panelLabel: "Care Gallery",
+    panelHeadline: "A high standard\nmakes a fine\nresult.",
+    panelBody: "Time in which healing surfaces,\nan unhurried hand\nthat listens to you.",
+    panelCta: "View care",
+
+    manifestoKw: "Manifesto",
+    manifestoText: "We take away.\nThen we fill.\nUpon the grain we have recorded,\nwe design an impression that is yours alone.",
+
+    featureKw: "Care",
+    featureCount: "003",
     cards: [
-      { num: "01", title: "A high standard\nmakes a fine result.", body: "Time in which healing surfaces,\nan unhurried hand that listens to you.", img: "assets/b/card-01.png" },
-      { num: "02", title: "Where difference\nbecomes impression.", body: "We read your grain\nand compose it with care.", img: "assets/b/card-02.jpg" },
-      { num: "03", title: "Impression shifts,\nas records accrue.", body: "A frame kept today becomes tomorrow's expression.\nediV remembers through the record.", img: "assets/b/card-03.png" },
+      {
+        num: "01", tag: "Lifting",
+        title: "The most honest\nway to refine the grain.",
+        body: "Time in which healing surfaces,\nan unhurried hand that listens.",
+        img: "assets/b/card-01.png",
+      },
+      {
+        num: "02", tag: "Laser",
+        title: "Where difference\nbecomes impression.",
+        body: "We read your grain\nand compose it with care.",
+        img: "assets/b/card-02.jpg",
+      },
+      {
+        num: "03", tag: "Care",
+        title: "Impression shifts,\nas records accrue.",
+        body: "A frame kept today becomes tomorrow's expression.",
+        img: "assets/b/card-03.png",
+      },
     ],
+    featureQuote: "Record over result. Archive over impression.",
+
     taglineKw: "ediV clinic",
     tagline: "The most delicate\nhour, for yourself.",
     taglineSub: "ediV begins with the standards of aesthetics and rest.",
+
+    treatKw: "Procedures",
+    treatNote: "Consultation required",
+    treatments: [
+      { name: "Skin Lifting", tag: "Lifting" },
+      { name: "Pigment Laser", tag: "Laser" },
+      { name: "Botox & Filler", tag: "Injectables" },
+      { name: "Skin Regeneration", tag: "Regeneration" },
+      { name: "Skin Booster", tag: "Booster" },
+      { name: "Premium Facial", tag: "Facial" },
+    ],
+
     visitTitle: "Finding\nediV clinic.",
     visitAddr: "3F, 94-6 Cheongdam-dong, Gangnam-gu, Seoul\n+82 2 0000 0000 · hello@ediv.clinic",
     visitCta: "Get directions",
@@ -391,13 +614,16 @@ function Reveal({ children, delay = 0, className = "", style }) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVis(true); obs.disconnect(); } }, { threshold: 0.1 });
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setVis(true); obs.disconnect(); } },
+      { threshold: 0.08 }
+    );
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
   return (
     <div ref={ref} className={`rv ${vis ? "in" : ""} ${className}`}
-         style={{ transitionDelay: `${delay * 130}ms`, ...style }}>
+         style={{ transitionDelay: `${delay * 120}ms`, ...style }}>
       {children}
     </div>
   );
@@ -419,55 +645,136 @@ function NavB({ lang, setLang, t, scrolled }) {
         <span className="sep">·</span>
         <button className={lang === "en" ? "on" : ""} onClick={() => setLang("en")}>EN</button>
       </div>
+      <div className="nav-b-symbol">
+        <img src="assets/b/symbol.svg" alt="ediV symbol" />
+      </div>
     </nav>
   );
 }
 
 function HeroB({ t }) {
   const [inView, setInView] = useState(false);
-  useEffect(() => { const id = setTimeout(() => setInView(true), 180); return () => clearTimeout(id); }, [t]);
+  useEffect(() => {
+    const id = setTimeout(() => setInView(true), 180);
+    return () => clearTimeout(id);
+  }, [t]);
   return (
     <section className="hero-b" id="hero">
       <video src="assets/b/ediv_a_hero.mp4" autoPlay muted loop playsInline preload="auto" />
       <div className="hero-b-overlay" />
       <div className="hero-b-copy">
+        <div className={`hero-b-eyebrow${inView ? " in" : ""}`}>— {t.eyebrow}</div>
         <h1>
           {t.h1.map((line, i) => (
             <span key={i} className={`h1-line${inView ? " in" : ""}`}
-                  style={{ transitionDelay: `${i * 160}ms` }}>{line}</span>
+                  style={{ transitionDelay: `${80 + i * 160}ms` }}>{line}</span>
           ))}
         </h1>
         <p className={`hero-b-sub${inView ? " in" : ""}`}>{t.heroSub}</p>
+        <div className={`hero-b-scroll${inView ? " in" : ""}`}>
+          <div className="hero-b-scroll-line" />
+          <span className="hero-b-scroll-label">{t.scrollLabel}</span>
+        </div>
       </div>
-      <div className="hero-b-portrait-label">{t.portraitLabel}</div>
+      <div className="hero-b-label">{t.heroLabel}</div>
     </section>
   );
 }
 
-function PhilB({ t }) {
+function SpreadB({ t }) {
   return (
-    <section id="philosophy">
-      <div className="phil-b">
-        <Reveal><div className="phil-b-kw">— {t.philKw}</div></Reveal>
-        <Reveal delay={1}><p className="phil-b-body">{t.philBody}</p></Reveal>
+    <section className="spread-b" id="spread">
+      <Reveal>
+        <div className="spread-b-head">
+          <span className="spread-b-vol">{t.spreadVol}</span>
+          <div className="spread-b-rule" />
+          <span className="spread-b-date">{t.spreadDate}</span>
+        </div>
+      </Reveal>
+      <div className="spread-b-body">
+        <Reveal className="spread-b-left">
+          <img src="assets/b/card-02.jpg" alt="" loading="lazy" />
+        </Reveal>
+        <Reveal delay={1} className="spread-b-right">
+          <img src="assets/b/card-03.png" alt="" loading="lazy" />
+          <div className="spread-b-caption">
+            <p>{t.spreadCaption}</p>
+            <span>{t.spreadCaptionLabel}</span>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
 }
 
-function EditorialB({ t }) {
+function PanelB({ t }) {
   return (
-    <section className="editorial-b" id="editorial">
-      <Reveal><div className="editorial-b-kw">— {t.editorialKw}</div></Reveal>
-      <div className="editorial-b-grid">
-        {t.cards.map((c, i) => (
-          <Reveal key={i} delay={i} className="card-b">
-            <div className="card-b-img-wrap"><img src={c.img} alt={c.title} /></div>
-            <div className="card-b-num">{c.num}</div>
-            <h3 className="card-b-title">{c.title}</h3>
-            <p className="card-b-body">{c.body}</p>
+    <section className="panel-b">
+      <div className="panel-b-text">
+        <Reveal><div className="panel-b-label">— {t.panelLabel}</div></Reveal>
+        <div className="panel-b-main">
+          <Reveal delay={1}>
+            <p className="panel-b-headline">{t.panelHeadline}</p>
+            <p className="panel-b-body">{t.panelBody}</p>
+            <button className="panel-b-cta">{t.panelCta} <span>→</span></button>
           </Reveal>
-        ))}
+        </div>
+      </div>
+      <div className="panel-b-img">
+        <img src="assets/b/card-01.png" alt="" loading="lazy" />
+      </div>
+    </section>
+  );
+}
+
+function ManifestoB({ t }) {
+  return (
+    <section className="manifesto-b">
+      <Reveal><div className="manifesto-b-kw">{t.manifestoKw}</div></Reveal>
+      <Reveal delay={1}><p className="manifesto-b-text">{t.manifestoText}</p></Reveal>
+    </section>
+  );
+}
+
+function FeatureB({ t }) {
+  const [main, ...rest] = t.cards;
+  const sub = rest[0];
+  return (
+    <section className="feature-b" id="feature">
+      <Reveal>
+        <div className="feature-b-header">
+          <div className="feature-b-kw">— {t.featureKw}</div>
+          <div className="feature-b-count">{t.featureCount} Items</div>
+        </div>
+      </Reveal>
+      <div className="feature-b-grid">
+        {/* left: featured card with overlay */}
+        <Reveal className="feature-b-main">
+          <div className="feature-b-main-img">
+            <img src={main.img} alt={main.title} loading="lazy" />
+          </div>
+          <div className="feature-b-main-overlay">
+            <div className="feature-b-main-num">{main.num}</div>
+            <h3 className="feature-b-main-title">{main.title}</h3>
+          </div>
+        </Reveal>
+        {/* right: smaller card + quote */}
+        <div className="feature-b-stack">
+          <Reveal delay={1} className="feature-b-sub">
+            <div className="feature-b-sub-img">
+              <img src={sub.img} alt={sub.title} loading="lazy" />
+            </div>
+            <div className="feature-b-sub-meta">
+              <span className="feature-b-sub-num">{sub.num}</span>
+              <span className="feature-b-sub-tag">{sub.tag}</span>
+            </div>
+            <h3 className="feature-b-sub-title">{sub.title}</h3>
+            <p className="feature-b-sub-body">{sub.body}</p>
+          </Reveal>
+          <Reveal delay={2} className="feature-b-quote">
+            <p>{t.featureQuote}</p>
+          </Reveal>
+        </div>
       </div>
     </section>
   );
@@ -485,14 +792,37 @@ function TaglineB({ t }) {
   );
 }
 
+function TreatB({ t }) {
+  return (
+    <section className="treat-b">
+      <div className="treat-b-inner">
+        <Reveal>
+          <div className="treat-b-header">
+            <div className="treat-b-kw">— {t.treatKw}</div>
+            <div className="treat-b-note">{t.treatNote}</div>
+          </div>
+        </Reveal>
+        {t.treatments.map((item, i) => (
+          <Reveal key={i} delay={i * 0.4} className="treat-b-item">
+            <span className="treat-b-name">{item.name}</span>
+            <span className="treat-b-tag">{item.tag}</span>
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function VisitB({ t }) {
   return (
-    <section className="visit-b pattern-section" id="visit">
+    <section className="visit-b" id="visit">
       <div className="visit-b-inner">
         <div>
           <Reveal><h2>{t.visitTitle}</h2></Reveal>
           <Reveal delay={1}><p className="visit-b-addr">{t.visitAddr}</p></Reveal>
-          <Reveal delay={2}><button className="visit-b-cta">{t.visitCta} <span>→</span></button></Reveal>
+          <Reveal delay={2}>
+            <button className="visit-b-cta">{t.visitCta} <span>→</span></button>
+          </Reveal>
         </div>
         <Reveal delay={1}>
           <div className="visit-b-map">
@@ -513,14 +843,22 @@ function FootB({ t }) {
     <footer className="foot-b">
       <div className="foot-b-inner">
         <div>
-          <div className="foot-b-brand-logo"><img src="assets/b/logo.svg" alt="ediV clinic" /></div>
+          <div className="foot-b-brand-logo">
+            <img src="assets/b/logo.svg" alt="ediV clinic" />
+          </div>
           <p className="foot-b-desc">{t.footDesc}</p>
           <div className="foot-b-social">
             <a href="#" aria-label="Instagram">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <rect x="3" y="3" width="18" height="18" rx="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/>
+              </svg>
             </a>
             <a href="#" aria-label="X">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M4 4l16 16M20 4L4 20"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M4 4l16 16M20 4L4 20"/>
+              </svg>
             </a>
           </div>
         </div>
@@ -540,8 +878,13 @@ function FootB({ t }) {
 }
 
 function AppB() {
-  const [lang, setLangState] = useState(() => { try { return localStorage.getItem("ediv_lang") || "ko"; } catch(e) { return "ko"; } });
-  const setLang = (l) => { setLangState(l); try { localStorage.setItem("ediv_lang", l); } catch(e) {} };
+  const [lang, setLangState] = useState(() => {
+    try { return localStorage.getItem("ediv_lang") || "ko"; } catch(e) { return "ko"; }
+  });
+  const setLang = (l) => {
+    setLangState(l);
+    try { localStorage.setItem("ediv_lang", l); } catch(e) {}
+  };
   const t = COPY_B[lang];
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
@@ -550,16 +893,21 @@ function AppB() {
     window.addEventListener("scroll", fn, { passive: true });
     return () => window.removeEventListener("scroll", fn);
   }, []);
-  useEffect(() => { document.documentElement.lang = lang === "ko" ? "ko" : "en"; }, [lang]);
+  useEffect(() => {
+    document.documentElement.lang = lang === "ko" ? "ko" : "en";
+  }, [lang]);
+
   return (
     <>
       <NavB lang={lang} setLang={setLang} t={t} scrolled={scrolled} />
       <main>
         <HeroB t={t} />
-        <div className="divider-b" />
-        <PhilB t={t} />
-        <EditorialB t={t} />
+        <SpreadB t={t} />
+        <PanelB t={t} />
+        <ManifestoB t={t} />
+        <FeatureB t={t} />
         <TaglineB t={t} />
+        <TreatB t={t} />
         <VisitB t={t} />
         <FootB t={t} />
       </main>
