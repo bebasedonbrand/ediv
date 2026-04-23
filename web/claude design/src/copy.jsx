@@ -13,10 +13,9 @@ const COPY = {
     navCare: "진료안내",
     navBook: "예약",
     eyebrow: "\n",
-    heroLine1: ["결을", "읽고,"],
-    heroLine2: ["인상을 설계합니다."],
-    heroSub:
-      "기록하는 곳, 기억하는 곳.\n에디브는 결과 인상을 읽고 기록합니다.\n기록이 쌓이면, 변화가 보입니다.",
+    heroLine1: ["맑고", "우아한"],
+    heroLine2: ["인상을 만드는 곳."],
+    heroSub: "미학과 휴식의 기준, EDIV.",
     heroMeta: [
       { k: "SINCE", v: "2019 · Gangnam, Seoul" },
       { k: "PHILOSOPHY", v: "덜어내고 채우다 — Less and fill." },
@@ -53,8 +52,8 @@ const COPY = {
     ],
     taglineEyebrow: "\n",
     tagline: [
-      "나를 위한 가장 ", ["em", "섬세한"], " 시간",
-      "\n에디브는 미학과 휴식의 기준부터 세웁니다.",
+      "The Standard of Grace",
+      "\nskin and soul",
     ],
     visitTitle: ["에디브클리닉에\n", ["em", "오시는길"], "\n"],
     visitAddr: "서울특별시 강남구 청담동 94-6 3층\n+82 2 0000 0000 · hello@ediv.clinic",
@@ -83,10 +82,9 @@ const COPY = {
     navCare: "Care",
     navBook: "Book",
     eyebrow: "\n",
-    heroLine1: ["Read", "the"],
-    heroLine2: ["grain,", ["serif", "design"], "the impression."],
-    heroSub:
-      "A place to record, a place to remember.\nediV reads the grain and the impression.\nAs records accrue, change becomes visible.",
+    heroLine1: ["A new"],
+    heroLine2: ["standard of care."],
+    heroSub: "The standard of aesthetics and rest. EDIV.",
     heroMeta: [
       { k: "SINCE", v: "2019 · Gangnam, Seoul" },
       { k: "PHILOSOPHY", v: "Less and fill — 덜어내고 채우다." },
@@ -120,8 +118,8 @@ const COPY = {
     ],
     taglineEyebrow: "\n",
     tagline: [
-      "The most ", ["em", "delicate"], " hour, for yourself.",
-      "\nediV begins with the standards of aesthetics and rest.",
+      "The Standard of Grace",
+      "\nskin and soul",
     ],
     visitTitle: ["Finding\n", ["em", "ediV clinic."]],
     visitAddr: "3F, 94-6 Cheongdam-dong, Gangnam-gu, Seoul\n+82 2 0000 0000 · hello@ediv.clinic",
