@@ -28,7 +28,7 @@ a { color: inherit; text-decoration: none; }
   --c1: #eee6de;
   --c2: #e3d6c9;
   --c3: #817870;
-  --nav-h: 68px;
+  --nav-h: 58px;
 }
 
 /* ─── NAV ────────────────────────────────────────────────── */
@@ -40,20 +40,13 @@ a { color: inherit; text-decoration: none; }
   background: rgba(129,120,112,0.96);
   backdrop-filter: blur(8px);
   border-bottom: 0.5px solid rgba(243,238,233,0.15);
-  transform: translateY(-100%);
-  opacity: 0;
-  transition: transform 0.6s cubic-bezier(0.25,0,0,1), opacity 0.5s ease;
-}
-.main-nav.nav-visible {
-  transform: translateY(0);
-  opacity: 1;
 }
 .nav-logo {
   display: flex; align-items: center;
   flex-shrink: 0;
 }
 .nav-logo img {
-  height: 20px;
+  height: 15px;
   width: auto;
   display: block;
   filter: brightness(0) invert(1) opacity(0.9);
@@ -97,7 +90,6 @@ a { color: inherit; text-decoration: none; }
   position: absolute; inset: 0;
   width: 100%; height: 100%;
   object-fit: cover;
-  object-position: center 22%;
   opacity: 0.72;
 }
 .hero-overlay {
@@ -125,7 +117,7 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: -0.02em;
   color: var(--c3);
 }
-.hero-headline em { font-style: normal; font-family: 'Noto Serif KR', serif; color: var(--c3); opacity: 0.7; font-size: 1em; }
+.hero-headline em { font-style: italic; font-family: 'Cormorant Garamond', serif; color: var(--c3); opacity: 0.7; font-size: 1.1em; }
 .hero-sub { text-align: right; padding-bottom: 6px; }
 .hero-sub p {
   font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
@@ -163,7 +155,7 @@ section { width: 100%; }
   font-size: clamp(28px, 3.2vw, 46px); font-weight: 300; line-height: 1.2;
   letter-spacing: -0.01em; color: var(--c3);
 }
-.intro-statement em { font-style: normal; font-family: 'Noto Serif KR', serif; opacity: 0.6; }
+.intro-statement em { font-style: italic; opacity: 0.6; }
 .intro-body { padding-top: 8px; }
 .intro-body p { font-size: 15px; line-height: 1.85; color: var(--c3); opacity: 0.7; margin-bottom: 20px; font-weight: 300; }
 .intro-body p:last-child { margin-bottom: 0; }
@@ -186,7 +178,7 @@ section { width: 100%; }
 .feature-item:last-child { border-right: none; padding-left: 40px; padding-right: 0; }
 .feature-item:nth-child(2) { padding-left: 40px; }
 .feature-number { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--c3); opacity: 0.35; margin-bottom: 20px; display: block; }
-.feature-item h3 { font-size: 24px; font-weight: 400; line-height: 1.25; color: var(--c3); margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.04em; }
+.feature-item h3 { font-size: 24px; font-weight: 400; line-height: 1.25; color: var(--c3); margin-bottom: 14px; }
 .feature-item p { font-size: 14px; line-height: 1.8; color: var(--c3); opacity: 0.65; font-weight: 300; }
 
 /* ─── EDITORIAL SPREAD ───────────────────────────────────── */
@@ -197,7 +189,7 @@ section { width: 100%; }
 .spread-text { padding: 64px 56px; display: flex; flex-direction: column; justify-content: center; border-left: 0.5px solid var(--c2); }
 .spread-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--c3); opacity: 0.4; margin-bottom: 28px; }
 .spread-quote { font-size: clamp(22px, 2.6vw, 36px); font-weight: 300; line-height: 1.35; color: var(--c3); margin-bottom: 28px; }
-.spread-quote em { font-style: normal; font-family: 'Noto Serif KR', serif; opacity: 0.65; }
+.spread-quote em { font-style: italic; opacity: 0.65; }
 .spread-body { font-size: 14px; line-height: 1.85; color: var(--c3); opacity: 0.65; font-weight: 300; margin-bottom: 36px; }
 .btn-line {
   display: inline-flex; align-items: center; gap: 12px;
@@ -211,8 +203,8 @@ section { width: 100%; }
 /* ─── CARD ROW ───────────────────────────────────────────── */
 .cards-section { padding: 80px 40px; }
 .cards-intro { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 40px; }
-.cards-headline { font-size: clamp(36px, 4vw, 60px); font-weight: 300; line-height: 1; color: var(--c3); letter-spacing: 0.04em; text-transform: uppercase; }
-.cards-headline em { font-style: normal; opacity: 0.55; }
+.cards-headline { font-size: clamp(36px, 4vw, 60px); font-weight: 300; line-height: 1; color: var(--c3); letter-spacing: -0.01em; }
+.cards-headline em { font-style: italic; opacity: 0.55; }
 .cards-link { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--c3); opacity: 0.5; border-bottom: 0.5px solid currentColor; padding-bottom: 2px; }
 .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--c2); }
 .card { background: var(--c0); overflow: hidden; }
@@ -238,7 +230,7 @@ section { width: 100%; }
 .manifesto-inner { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
 .manifesto-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--c3); opacity: 0.45; margin-bottom: 36px; }
 .manifesto-text { font-size: clamp(30px, 4vw, 56px); font-weight: 300; line-height: 1.18; color: var(--c3); letter-spacing: -0.01em; }
-.manifesto-text em { font-style: normal; font-family: 'Noto Serif KR', serif; opacity: 0.6; }
+.manifesto-text em { font-style: italic; opacity: 0.6; }
 .manifesto-rule { width: 32px; height: 0.5px; background: var(--c3); opacity: 0.35; margin: 40px auto; }
 .manifesto-note { font-size: 13px; line-height: 1.75; color: var(--c3); opacity: 0.6; font-weight: 300; }
 
@@ -248,20 +240,13 @@ section { width: 100%; }
 .phil-item:last-child { border-right: none; padding-left: 32px; padding-right: 0; }
 .phil-item:nth-child(2), .phil-item:nth-child(3) { padding-left: 32px; }
 .phil-num { font-size: 9px; letter-spacing: 0.2em; color: var(--c3); opacity: 0.3; margin-bottom: 22px; display: block; }
-.phil-item h4 { font-size: 16px; font-weight: 400; line-height: 1.3; color: var(--c3); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
+.phil-item h4 { font-size: 16px; font-weight: 400; line-height: 1.3; color: var(--c3); margin-bottom: 12px; }
 .phil-item p { font-size: 13px; line-height: 1.75; color: var(--c3); opacity: 0.6; font-weight: 300; }
 
 /* ─── CONTACT BAND ───────────────────────────────────────── */
-.contact-band { background: var(--c3); padding: 64px 40px; display: flex; align-items: center; justify-content: space-between; position: relative; overflow: hidden; }
-.contact-band::before {
-  content: ''; position: absolute; inset: 0;
-  background: url('assets/a/pattern.svg') repeat;
-  background-size: 576px 324px; opacity: 0.2;
-  filter: brightness(0) invert(1);
-  pointer-events: none;
-}
+.contact-band { background: var(--c3); padding: 64px 40px; display: flex; align-items: center; justify-content: space-between; }
 .contact-text h2 { font-size: clamp(28px, 3.5vw, 52px); font-weight: 300; color: var(--c0); line-height: 1.1; }
-.contact-text h2 em { font-style: normal; font-family: 'Noto Serif KR', serif; opacity: 0.65; }
+.contact-text h2 em { font-style: italic; opacity: 0.65; }
 .contact-text p { font-size: 13px; color: var(--c1); opacity: 0.6; margin-top: 12px; font-weight: 300; }
 .contact-action { display: flex; gap: 16px; }
 .btn-light { border: 0.5px solid rgba(243,238,233,0.5); padding: 13px 28px; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--c0); opacity: 0.8; }
@@ -320,6 +305,7 @@ footer { background: var(--c1); border-top: 0.5px solid var(--c2); padding: 40px
   <ul class="nav-menu">
     <li><a href="#">Program</a></li>
     <li><a href="#">About</a></li>
+    <li><a href="#">Editorial</a></li>
     <li><a href="#">Contact</a></li>
   </ul>
   <div class="nav-symbol">
@@ -342,6 +328,7 @@ footer { background: var(--c1); border-top: 0.5px solid var(--c2); padding: 40px
     <div class="hero-sub">
       <p>Aesthetic Medicine</p>
       <p>Seoul, Korea</p>
+      <p>Est. 2024</p>
     </div>
   </div>
   <div class="hero-scroll">
@@ -531,6 +518,7 @@ footer { background: var(--c1); border-top: 0.5px solid var(--c2); padding: 40px
   <nav class="footer-nav">
     <a href="#">Program</a>
     <a href="#">About</a>
+    <a href="#">Editorial</a>
     <a href="#">Contact</a>
     <a href="#">Privacy</a>
   </nav>
@@ -541,20 +529,6 @@ footer { background: var(--c1); border-top: 0.5px solid var(--c2); padding: 40px
     <p class="footer-copy">© 2024 ediV clinic. All rights reserved.</p>
   </div>
 </footer>
-
-<script>
-(function() {
-  const nav = document.querySelector('.main-nav');
-  function onScroll() {
-    if (window.scrollY > 60) {
-      nav.classList.add('nav-visible');
-    } else {
-      nav.classList.remove('nav-visible');
-    }
-  }
-  window.addEventListener('scroll', onScroll, { passive: true });
-})();
-</script>
 
 </body>
 </html>
