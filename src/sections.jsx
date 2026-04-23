@@ -73,12 +73,23 @@ function Nav({ lang, setLang, t, scrolled }) {
 
 // ---------- Hero ----------
 function Hero({ t }) {
+  const cfg = window.EDIV_CONFIG || {};
+  const heroImages = cfg.heroImages || (cfg.heroSrc ? [cfg.heroSrc] : []);
+
   // Stagger-in words
   const [inView, setInView] = useState(false);
   useEffect(() => {
     const id = setTimeout(() => setInView(true), 200);
     return () => clearTimeout(id);
   }, [t]); // re-trigger on lang change
+
+  // Slideshow
+  const [slideIdx, setSlideIdx] = useState(0);
+  useEffect(() => {
+    if (heroImages.length < 2) return;
+    const id = setInterval(() => setSlideIdx(i => (i + 1) % heroImages.length), 5000);
+    return () => clearInterval(id);
+  }, []);
 
   const renderWords = (line) => {
     const parts = [];
@@ -105,7 +116,7 @@ function Hero({ t }) {
 
   return (
     <section className="hero" id="hero">
-      <div className="hero-copy" style={{ padding: "180px" }}>
+      <div className="hero-copy" style={{ padding: "0 0 0 40px" }}>
         <h1 style={{ width: "353px", height: "100px" }}>
           {renderWords(t.heroLine1)}
           <br />
@@ -114,17 +125,20 @@ function Hero({ t }) {
         <p className="hero-sub" style={{ whiteSpace: "pre-line", width: "300px" }}>{t.heroSub}</p>
       </div>
 
-      <div className={`hero-portrait ${inView ? "in" : ""}`}>
+      <div className={`hero-portrait ${inView ? "in" : ""} ${cfg.heroType === "image" ? "is-image" : "is-video"}`}>
         <div className="portrait-frame">
-          {(window.EDIV_CONFIG || {}).heroType === "image" ? (
-            <img
-              src={(window.EDIV_CONFIG || {}).heroSrc}
-              className="hero-portrait-img"
-              alt="ediV clinic · model portrait"
-            />
+          {cfg.heroType === "image" ? (
+            heroImages.map((src, i) => (
+              <img
+                key={src}
+                src={src}
+                className={`hero-portrait-img${i === slideIdx ? " slide-active" : ""}`}
+                alt={`ediV clinic · model portrait ${i + 1}`}
+              />
+            ))
           ) : (
             <video
-              src={((window.EDIV_CONFIG || {}).heroSrc) || "assets/ediv_a_hero.mp4"}
+              src={cfg.heroSrc || "assets/ediv_a_hero.mp4"}
               className="hero-portrait-img"
               autoPlay
               muted

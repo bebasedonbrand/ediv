@@ -201,7 +201,7 @@ button { font-family: inherit; letter-spacing: inherit; cursor: pointer; }
 .lang-toggle .sep { opacity: 0.3; }
 }
 .brand-tag {
-  font: 300 italic 14px/1 var(--font-serif);
+  font: 300 normal 14px/1 var(--font-serif);
   color: var(--ink-3);
   letter-spacing: 0.02em;
 }
@@ -296,14 +296,14 @@ button { font-family: inherit; letter-spacing: inherit; cursor: pointer; }
   font-weight: 300;
   font-size: 40px;
   line-height: 1.18;
-  letter-spacing: 1px;
+  letter-spacing: 4px;
   color: #000000;
   padding: 0;
   text-align: left;
 }
 .hero h1 .serif {
-  font-family: var(--font-serif);
-  font-style: italic;
+  font-family: "Spoqa Han Sans Neo", "Noto Sans KR", var(--font-ko);
+  font-style: normal;
   font-weight: 300;
   color: var(--ink-2);
 }
@@ -389,6 +389,42 @@ button { font-family: inherit; letter-spacing: inherit; cursor: pointer; }
   opacity: 1;
   transform: scale(1);
 }
+
+/* ── PNG variant (alpha channel — no mask needed) ── */
+/* portrait-frame overflow 해제 — 이미지가 아래로 잘리지 않게 */
+.hero-portrait.is-image .portrait-frame {
+  overflow: visible;
+}
+/* All slides stacked; only .slide-active is visible */
+.hero-portrait.is-image .hero-portrait-img {
+  width: auto;
+  height: 96%;
+  max-width: 62%;
+  top: 0;
+  bottom: auto;
+  right: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  object-fit: contain;
+  object-position: top center;
+  /* 하단 흰 배경 경계선 페이드아웃 */
+  -webkit-mask-image: linear-gradient(to bottom, black 78%, transparent 98%);
+  mask-image: linear-gradient(to bottom, black 78%, transparent 98%);
+  filter: none;
+  opacity: 0;
+  transition: opacity 1400ms ease-in-out;
+}
+/* Override default in-view rule — keep inactive slides hidden */
+.hero-portrait.is-image.in .hero-portrait-img {
+  filter: none;
+  transform: translateX(-50%);
+  opacity: 0;
+}
+/* Show only the active slide */
+.hero-portrait.is-image.in .hero-portrait-img.slide-active {
+  opacity: 1;
+}
+
 .portrait-label {
   position: absolute;
   left: -12px;
@@ -465,8 +501,8 @@ button { font-family: inherit; letter-spacing: inherit; cursor: pointer; }
   white-space: pre-line;
 }
 .phil-body em {
-  font-family: var(--font-serif);
-  font-style: italic;
+  font-family: "Spoqa Han Sans Neo", "Noto Sans KR", var(--font-ko);
+  font-style: normal;
   font-weight: 300;
   color: var(--ink-2);
 }
@@ -559,8 +595,8 @@ button { font-family: inherit; letter-spacing: inherit; cursor: pointer; }
   margin: 0;
 }
 .tagline em {
-  font-family: var(--font-serif);
-  font-style: italic;
+  font-family: "Spoqa Han Sans Neo", "Noto Sans KR", var(--font-ko);
+  font-style: normal;
   font-weight: 300;
   color: var(--ink-2);
 }
@@ -892,6 +928,13 @@ button { font-family: inherit; letter-spacing: inherit; cursor: pointer; }
     -webkit-mask-image: radial-gradient(ellipse 80% 90% at 78% 52%, black 30%, transparent 85%);
     mask-image: radial-gradient(ellipse 80% 90% at 78% 52%, black 30%, transparent 85%);
   }
+  .hero-portrait.is-image .hero-portrait-img {
+    height: 88%;
+    max-width: 58%;
+    -webkit-mask-image: none;
+    mask-image: none;
+    object-position: top right;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -900,6 +943,13 @@ button { font-family: inherit; letter-spacing: inherit; cursor: pointer; }
     object-position: 76% center;
     -webkit-mask-image: radial-gradient(ellipse 88% 90% at 74% 52%, black 30%, transparent 85%);
     mask-image: radial-gradient(ellipse 88% 90% at 74% 52%, black 30%, transparent 85%);
+  }
+  .hero-portrait.is-image .hero-portrait-img {
+    height: 84%;
+    max-width: 64%;
+    -webkit-mask-image: none;
+    mask-image: none;
+    object-position: top right;
   }
 }
 
@@ -916,6 +966,20 @@ button { font-family: inherit; letter-spacing: inherit; cursor: pointer; }
     object-position: 72% center;
     -webkit-mask-image: radial-gradient(ellipse 95% 88% at 68% 52%, black 30%, transparent 85%);
     mask-image: radial-gradient(ellipse 95% 88% at 68% 52%, black 30%, transparent 85%);
+  }
+  .hero-portrait.is-image .hero-portrait-img {
+    width: auto;
+    height: 55%;
+    max-width: 75%;
+    top: 8%;
+    right: 50%;
+    transform: translateX(50%);
+    -webkit-mask-image: none;
+    mask-image: none;
+    object-position: top center;
+  }
+  .hero-portrait.is-image.in .hero-portrait-img {
+    transform: translateX(50%);
   }
   .philosophy, .editorial, .tagline-band, .visit, .foot { padding-left: 24px; padding-right: 24px; }
   .philosophy-inner { grid-template-columns: 1fr; gap: 24px; }
