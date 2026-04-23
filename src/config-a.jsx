@@ -2,7 +2,7 @@
 window.EDIV_CONFIG = {
   variant: "a",
   heroType: "video",
-  heroSrc: "assets/a/hero-portrait.mp4",
+  heroSrc: "assets/a/ediv_hero.mp4",
   symbol: "assets/a/symbol.svg",
   cards: [
     "assets/a/card-01.jpg",
