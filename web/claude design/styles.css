@@ -425,6 +425,23 @@ button { font-family: inherit; letter-spacing: inherit; cursor: pointer; }
   opacity: 1;
 }
 
+/* ── Sage mist rising to shoulder — C variant overlay ── */
+.hero-portrait.is-image .portrait-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: linear-gradient(
+    to top,
+    rgba(205, 232, 216, 0.52) 0%,
+    rgba(205, 232, 216, 0.38) 16%,
+    rgba(214, 236, 222, 0.22) 32%,
+    rgba(228, 242, 234, 0.07) 46%,
+    transparent 58%
+  );
+}
+
 .portrait-label {
   position: absolute;
   left: -12px;
