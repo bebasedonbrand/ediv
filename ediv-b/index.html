@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ediV clinic — 안 B</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jeju+Myeongjo&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --cream:  #f7f4eb;
+  --brown:  #674748;
+  --ink:    #2b1c1c;
+  --muted:  rgba(103,71,72,0.55);
+  --white:  #ffffff;
+  --font-ko: 'Jeju Myeongjo', 'KoPubWorld Batang', serif;
+  --font-en: 'Cormorant Garamond', Georgia, serif;
+  --track:  0.075em;
+  /* pattern.svg inlined as data URI */
+  --pattern-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 109.95 108.04'%3E%3Cdefs%3E%3Cstyle%3E.c%7Bfill:none%3Bstroke:%23674748%3Bstroke-miterlimit:10%3Bstroke-width:.08px%7D%3C/style%3E%3C/defs%3E%3Cpath class='c' d='M109.75%2C47.01C82.96%2C46.73%2C63.72%2C30.07%2C57.2.02'/%3E%3Cpath class='c' d='M66.06%2C74.91c13.43-9.34%2C29.41-13.16%2C43.88-13.16'/%3E%3Cpath class='c' d='M.2%2C61.04c26.79.28%2C46.03%2C16.93%2C52.55%2C46.98'/%3E%3Cpath class='c' d='M43.88%2C33.13c-13.43%2C9.34-29.41%2C13.16-43.88%2C13.16'/%3E%3C/svg%3E");
+}
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-ko); color: var(--ink); background: var(--cream); -webkit-font-smoothing: antialiased; }
+
+/* ── NAV ──────────────────────────────────────────────
+   Default: transparent, logo/links in #674748
+   Scrolled: #674748 bar slides in from top, text #f7f4eb
+────────────────────────────────────────────────────── */
+.nav-b {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 28px 64px;
+  transition: padding 0.4s;
+}
+/* slide-in bar via pseudo element */
+.nav-b::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--brown);
+  transform: translateY(-100%);
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+}
+.nav-b.scrolled { padding: 18px 64px; }
+.nav-b.scrolled::before { transform: translateY(0); }
+
+/* logo */
+.nav-b .b-logo img {
+  height: 26px; width: auto; display: block;
+  /* black → #674748 brown */
+  filter: invert(29%) sepia(16%) saturate(800%) hue-rotate(314deg) brightness(80%);
+  transition: filter 0.3s;
+}
+.nav-b.scrolled .b-logo img {
+  /* black → #f7f4eb cream */
+  filter: brightness(0) invert(1) sepia(0.06) saturate(2) brightness(0.97);
+}
+
+/* nav links */
+.nav-b ul { display: flex; gap: 40px; list-style: none; }
+.nav-b ul a {
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  text-decoration: none; color: var(--muted); transition: color 0.3s;
+}
+.nav-b.scrolled ul a { color: rgba(247,244,235,0.75); }
+.nav-b ul a:hover { color: var(--brown); }
+.nav-b.scrolled ul a:hover { color: var(--cream); }
+
+/* nav symbol — only visible when scrolled */
+.nav-b-symbol {
+  margin-left: 24px; padding-left: 24px;
+  border-left: 0.5px solid rgba(247,244,235,0.25);
+  display: flex; align-items: center;
+  opacity: 0; transition: opacity 0.4s;
+}
+.nav-b.scrolled .nav-b-symbol { opacity: 1; }
+.nav-b-symbol img {
+  height: 22px; width: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0.8;
+}
+
+/* card number symbol */
+.card-b-num {
+  display: flex; align-items: center; gap: 10px;
+}
+.card-num-symbol {
+  height: 22px; width: auto; display: block;
+  opacity: 0.55;
+  filter: invert(29%) sepia(16%) saturate(800%) hue-rotate(314deg) brightness(80%);
+}
+
+/* lang toggle */
+.nav-lang-b { display: flex; align-items: center; gap: 6px; }
+.nav-lang-b button {
+  background: none; border: none; font-family: var(--font-ko);
+  font-size: 11px; letter-spacing: 0.1em; cursor: pointer;
+  color: var(--muted); transition: color 0.3s; padding: 0;
+}
+.nav-lang-b button.on { color: var(--brown); }
+.nav-b.scrolled .nav-lang-b button { color: rgba(247,244,235,0.55); }
+.nav-b.scrolled .nav-lang-b button.on { color: var(--cream); }
+.nav-lang-b .sep { font-size: 11px; color: rgba(103,71,72,0.25); transition: color 0.3s; }
+.nav-b.scrolled .nav-lang-b .sep { color: rgba(247,244,235,0.25); }
+
+/* ── Tracing paper reveal animation ──────────────── */
+@keyframes paperLift {
+  0%   {
+    opacity: 1;
+    backdrop-filter: blur(22px) brightness(1.08);
+    -webkit-backdrop-filter: blur(22px) brightness(1.08);
+  }
+  55%  {
+    opacity: 0.72;
+    backdrop-filter: blur(10px) brightness(1.04);
+    -webkit-backdrop-filter: blur(10px) brightness(1.04);
+  }
+  100% {
+    opacity: 0.18;
+    backdrop-filter: blur(1.5px);
+    -webkit-backdrop-filter: blur(1.5px);
+  }
+}
+.hero-b-paper {
+  position: absolute; inset: 0; z-index: 1;
+  background: rgba(247, 244, 235, 0.82);
+  backdrop-filter: blur(22px) brightness(1.08);
+  -webkit-backdrop-filter: blur(22px) brightness(1.08);
+  animation: paperLift 3.2s cubic-bezier(0.4, 0, 0.15, 1) 0.5s forwards;
+  pointer-events: none;
+}
+
+/* ── HERO · full-screen video ─────────────────────── */
+.hero-b {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: var(--cream);
+}
+.hero-b video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: top center;
+  z-index: 0;
+}
+/* left-side gradient so text stays legible */
+.hero-b-overlay {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(
+    to right,
+    rgba(247,244,235,0.82) 0%,
+    rgba(247,244,235,0.55) 40%,
+    rgba(247,244,235,0.08) 65%,
+    transparent 80%
+  );
+}
+.hero-b-copy {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 160px 64px 100px;
+  min-height: 100vh;
+  max-width: 52%;
+}
+.hero-b h1 {
+  font-family: var(--font-ko); font-size: clamp(28px, 2.8vw, 50px);
+  font-weight: 400; line-height: 1.45; letter-spacing: var(--track);
+  color: var(--brown); margin-bottom: 44px;
+}
+.hero-b h1 .h1-line {
+  display: block; opacity: 0; transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.hero-b h1 .h1-line.in { opacity: 1; transform: none; }
+.hero-b-sub {
+  font-size: 13px; line-height: 2.2; letter-spacing: var(--track);
+  color: var(--muted); white-space: pre-line; max-width: 300px;
+  opacity: 0; transform: translateY(16px);
+  transition: opacity 0.8s ease 0.5s, transform 0.8s ease 0.5s;
+}
+.hero-b-sub.in { opacity: 1; transform: none; }
+.hero-b-portrait-label {
+  position: absolute; bottom: 36px; right: 32px; z-index: 3;
+  font-size: 10px; letter-spacing: 0.16em;
+  color: rgba(247,244,235,0.5); writing-mode: vertical-rl;
+}
+
+/* ── PATTERN background (sections below hero) ─────── */
+.pattern-section {
+  position: relative;
+}
+.pattern-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: var(--pattern-url);
+  background-size: 140vw auto;
+  background-repeat: no-repeat;
+  background-position: center center;
+  opacity: 0.22;
+  pointer-events: none;
+  z-index: 0;
+}
+.pattern-section > * { position: relative; z-index: 1; }
+
+/* ── DIVIDER ──────────────────────────────────────── */
+.divider-b {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--brown) 30%, var(--brown) 70%, transparent);
+  opacity: 0.15; margin: 0 64px;
+}
+
+/* ── PHILOSOPHY ───────────────────────────────────── */
+.phil-b { padding: 160px 64px; max-width: 1200px; margin: 0 auto; }
+.phil-b-kw {
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--brown); margin-bottom: 64px;
+}
+.phil-b-body {
+  font-family: var(--font-ko); font-size: clamp(22px, 2.8vw, 38px);
+  font-weight: 400; line-height: 1.9; letter-spacing: var(--track);
+  color: var(--ink); white-space: pre-line;
+}
+
+/* ── EDITORIAL ────────────────────────────────────── */
+.editorial-b { padding: 80px 64px 160px; }
+.editorial-b-kw {
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--brown); margin-bottom: 64px;
+}
+.editorial-b-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; }
+.card-b { display: flex; flex-direction: column; }
+.card-b-img-wrap {
+  aspect-ratio: 3/4; overflow: hidden; margin-bottom: 28px;
+  background: #e5e0d2;
+}
+.card-b-img-wrap img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform 0.7s ease;
+}
+.card-b:hover .card-b-img-wrap img { transform: scale(1.05); }
+.card-b-num { font-size: 10px; letter-spacing: 0.2em; color: var(--brown); margin-bottom: 14px; }
+.card-b-title {
+  font-family: var(--font-ko); font-size: 16px; font-weight: 400;
+  line-height: 1.7; letter-spacing: var(--track); color: var(--ink);
+  margin-bottom: 12px; white-space: pre-line;
+}
+.card-b-body {
+  font-size: 12.5px; line-height: 2.1; letter-spacing: var(--track);
+  color: var(--muted); white-space: pre-line;
+}
+
+/* ── TAGLINE ──────────────────────────────────────── */
+.tagline-b { background: var(--brown); padding: 160px 64px; }
+.tagline-b-inner { max-width: 1100px; margin: 0 auto; }
+.tagline-b-kw {
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(247,244,235,0.4); margin-bottom: 48px;
+}
+.tagline-b-text {
+  font-family: var(--font-ko); font-size: clamp(28px, 4vw, 60px);
+  font-weight: 400; line-height: 1.5; letter-spacing: var(--track);
+  color: var(--cream); white-space: pre-line; margin-bottom: 36px;
+}
+.tagline-b-sub {
+  font-size: 13px; line-height: 2; letter-spacing: var(--track);
+  color: rgba(247,244,235,0.45);
+}
+
+/* ── VISIT ────────────────────────────────────────── */
+.visit-b { padding: 160px 64px; }
+.visit-b-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 100px; align-items: center;
+}
+.visit-b h2 {
+  font-family: var(--font-ko); font-size: clamp(26px, 3.2vw, 48px);
+  font-weight: 400; line-height: 1.5; letter-spacing: var(--track);
+  color: var(--ink); white-space: pre-line; margin-bottom: 36px;
+}
+.visit-b-addr {
+  font-size: 13px; line-height: 2.4; letter-spacing: var(--track);
+  color: var(--muted); white-space: pre-line; margin-bottom: 44px;
+}
+.visit-b-cta {
+  display: inline-flex; align-items: center; gap: 14px;
+  background: var(--brown); color: var(--cream);
+  border: none; padding: 16px 36px;
+  font-family: var(--font-ko); font-size: 12px; letter-spacing: 0.15em;
+  cursor: pointer; transition: opacity 0.2s;
+}
+.visit-b-cta:hover { opacity: 0.8; }
+.visit-b-map {
+  aspect-ratio: 1; background: rgba(103,71,72,0.04);
+  border: 1px solid rgba(103,71,72,0.15);
+  position: relative; overflow: hidden;
+}
+.map-b-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(103,71,72,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(103,71,72,0.07) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+.map-b-pin {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -60%); text-align: center;
+}
+.map-b-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--brown); margin: 0 auto 10px;
+  box-shadow: 0 0 0 8px rgba(103,71,72,0.12);
+}
+.map-b-label { font-size: 10px; letter-spacing: 0.16em; color: var(--brown); white-space: nowrap; }
+
+/* ── FOOTER ───────────────────────────────────────── */
+.foot-b { background: var(--ink); padding: 80px 64px 40px; }
+.foot-b-inner {
+  display: grid; grid-template-columns: 2.2fr 1fr 1fr 1fr;
+  gap: 64px; padding-bottom: 64px;
+  border-bottom: 1px solid rgba(255,255,255,0.07); margin-bottom: 32px;
+}
+.foot-b-brand-logo img {
+  height: 20px; width: auto; display: block;
+  filter: brightness(0) invert(1) sepia(0.06) saturate(2) brightness(0.97);
+  opacity: 0.75; margin-bottom: 24px;
+}
+.foot-b-desc {
+  font-size: 12px; line-height: 2.1; letter-spacing: var(--track);
+  color: rgba(255,255,255,0.3); white-space: pre-line; margin-bottom: 28px;
+}
+.foot-b-social { display: flex; gap: 18px; }
+.foot-b-social a { color: rgba(255,255,255,0.2); text-decoration: none; transition: color 0.2s; }
+.foot-b-social a:hover { color: rgba(247,244,235,0.7); }
+.foot-b-col h4 {
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.22); margin-bottom: 24px;
+}
+.foot-b-col ul { list-style: none; }
+.foot-b-col li { margin-bottom: 12px; }
+.foot-b-col a {
+  font-size: 12px; letter-spacing: var(--track);
+  color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s;
+}
+.foot-b-col a:hover { color: var(--cream); }
+.foot-b-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 11px; letter-spacing: var(--track); color: rgba(255,255,255,0.15);
+}
+
+/* ── REVEAL ───────────────────────────────────────── */
+.rv { opacity: 0; transform: translateY(28px); transition: opacity 0.85s ease, transform 0.85s ease; }
+.rv.in { opacity: 1; transform: none; }
+
+/* ── RESPONSIVE ───────────────────────────────────── */
+@media (max-width: 860px) {
+  .nav-b, .nav-b.scrolled { padding: 20px 28px; }
+  .nav-b ul { display: none; }
+  .hero-b-copy { padding: 120px 28px 60px; max-width: 80%; }
+  .hero-b-overlay { background: linear-gradient(to right, rgba(247,244,235,0.88) 0%, rgba(247,244,235,0.4) 60%, transparent 100%); }
+  .phil-b { padding: 80px 28px; }
+  .editorial-b { padding: 60px 28px 100px; }
+  .editorial-b-grid { grid-template-columns: 1fr; }
+  .tagline-b { padding: 80px 28px; }
+  .visit-b { padding: 80px 28px; }
+  .visit-b-inner { grid-template-columns: 1fr; gap: 48px; }
+  .foot-b { padding: 60px 28px 32px; }
+  .foot-b-inner { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .divider-b { margin: 0 28px; }
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+const COPY_B = {
+  ko: {
+    nav: [["홈","#hero"], ["소개","#philosophy"], ["진료안내","#editorial"], ["예약","#visit"]],
+    h1: ["매일 마주하는 피부에,", "가장 좋은 손길을 더합니다."],
+    heroSub: "Crafted for One, Crafted to Last.",
+    portraitLabel: "Portrait — No. 014",
+    philKw: "Philosophy",
+    philBody: "에디브에서의 시간은 한 사람의 삶에 변화를 만드는 순간입니다.\n고객님이 들어서는 순간부터 나서는 순간까지 정성을 들여,\n우리 가장 가까이, 가장 오래 함께할 피부를 마주하는\n매일의 순간이 행복해지는 것을 목표로 합니다.",
+    editorialKw: "Care",
+    cards: [
+      { num: "01", title: "시술이 아니라,\n작품입니다.", body: "한 사람을 위해 설계된 결과.\n서두르지 않는 손길이 만드는 차이.", img: "../assets/b/card-01.png" },
+      { num: "02", title: "매일 마주하는 피부에\n가장 좋은 손길을.", body: "필요한 것만, 정확하게, 섬세하게.\n에디브는 당신의 피부를 기억합니다.", img: "../assets/b/card-02.jpg" },
+      { num: "03", title: "가장 오래 남는\n나를 위한 시간.", body: "오늘의 시간이 내일의 인상을 만듭니다.\n에디브에서의 시간은 오래 남습니다.", img: "../assets/b/card-03.png" },
+    ],
+    taglineKw: "ediV clinic",
+    tagline: "Crafted for one.\n나를 위한, 단 하나의 시간.",
+    taglineSub: "서두르지 않는 손길, 필요한 것만 더하는 설계.",
+    visitTitle: "에디브클리닉에\n오시는 길",
+    visitAddr: "서울특별시 강남구 청담동 94-6 3층\n+82 2 0000 0000 · hello@ediv.clinic",
+    visitCta: "길찾기",
+    footDesc: "Crafted for one.\n청담동 피부·에스테틱 클리닉",
+    footCols: [
+      { h: "Info",     items: ["대표 소개", "멤버십", "아카이브"] },
+      { h: "Clinic",   items: ["예약 · 문의", "진료일", "시술 라인", "케어 프로그램"] },
+      { h: "고객 지원", items: ["자주 묻는 질문", "오시는 길", "개인정보처리방침"] },
+    ],
+    footCopy: "© 2026 ediV clinic · All rights reserved.",
+  },
+  en: {
+    nav: [["Home","#hero"], ["About","#philosophy"], ["Care","#editorial"], ["Book","#visit"]],
+    h1: ["Crafted for one.", "Every touch, yours alone."],
+    heroSub: "Crafted for One, Crafted to Last.",
+    portraitLabel: "Portrait — No. 014",
+    philKw: "Philosophy",
+    philBody: "At ediV, every moment is one that creates change in a person's life.\nFrom the moment you walk in to the moment you leave,\nwe give our full care — so that the daily moments you face\nthe skin closest to you, for the longest time, become ones of joy.",
+    editorialKw: "Care",
+    cards: [
+      { num: "01", title: "Not a procedure.\nA composition.", body: "A result designed for one.\nThe difference of an unhurried hand.", img: "../assets/b/card-01.png" },
+      { num: "02", title: "The best care\nfor skin you meet daily.", body: "Only what is needed, precisely, gently.\nediV remembers your skin.", img: "../assets/b/card-02.jpg" },
+      { num: "03", title: "The hour for yourself\nthat lasts the longest.", body: "Today's time shapes tomorrow's impression.\nThe time spent at ediV stays with you.", img: "../assets/b/card-03.png" },
+    ],
+    taglineKw: "ediV clinic",
+    tagline: "Crafted for one.\nThe hour that belongs to no one else.",
+    taglineSub: "An unhurried hand. A design that adds only what is needed.",
+    visitTitle: "Finding\nediV clinic.",
+    visitAddr: "3F, 94-6 Cheongdam-dong, Gangnam-gu, Seoul\n+82 2 0000 0000 · hello@ediv.clinic",
+    visitCta: "Get directions",
+    footDesc: "Crafted for one.\nA skin & aesthetic clinic in Cheongdam.",
+    footCols: [
+      { h: "Info",    items: ["About", "Membership", "Archive"] },
+      { h: "Clinic",  items: ["Booking", "Hours", "Procedures", "Care programs"] },
+      { h: "Support", items: ["FAQ", "Directions", "Privacy"] },
+    ],
+    footCopy: "© 2026 ediV clinic · All rights reserved.",
+  },
+};
+
+function Reveal({ children, delay = 0, className = "", style }) {
+  const ref = useRef(null);
+  const [vis, setVis] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVis(true); obs.disconnect(); } }, { threshold: 0.1 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  return (
+    <div ref={ref} className={`rv ${vis ? "in" : ""} ${className}`}
+         style={{ transitionDelay: `${delay * 130}ms`, ...style }}>
+      {children}
+    </div>
+  );
+}
+
+function NavB({ lang, setLang, t, scrolled }) {
+  return (
+    <nav className={`nav-b${scrolled ? " scrolled" : ""}`}>
+      <a href="#hero" className="b-logo" aria-label="ediV clinic">
+        <img src="../assets/b/logo.svg" alt="ediV clinic" />
+      </a>
+      <ul>
+        {t.nav.map(([label, href], i) => (
+          <li key={i}><a href={href}>{label}</a></li>
+        ))}
+      </ul>
+      <div className="nav-lang-b">
+        <button className={lang === "ko" ? "on" : ""} onClick={() => setLang("ko")}>KO</button>
+        <span className="sep">·</span>
+        <button className={lang === "en" ? "on" : ""} onClick={() => setLang("en")}>EN</button>
+      </div>
+      <div className="nav-b-symbol">
+        <img src="../assets/b/symbol.svg" alt="" aria-hidden="true" />
+      </div>
+    </nav>
+  );
+}
+
+function HeroB({ t }) {
+  const [inView, setInView] = useState(false);
+  useEffect(() => { const id = setTimeout(() => setInView(true), 180); return () => clearTimeout(id); }, [t]);
+  return (
+    <section className="hero-b" id="hero">
+      <video src="../assets/b/ediv_a_hero.mp4" autoPlay muted loop playsInline preload="auto" />
+      <div className="hero-b-paper" />
+      <div className="hero-b-overlay" />
+      <div className="hero-b-copy">
+        <h1>
+          {t.h1.map((line, i) => (
+            <span key={i} className={`h1-line${inView ? " in" : ""}`}
+                  style={{ transitionDelay: `${i * 160}ms` }}>{line}</span>
+          ))}
+        </h1>
+        <p className={`hero-b-sub${inView ? " in" : ""}`}>{t.heroSub}</p>
+      </div>
+      <div className="hero-b-portrait-label">{t.portraitLabel}</div>
+    </section>
+  );
+}
+
+function PhilB({ t }) {
+  return (
+    <section id="philosophy">
+      <div className="phil-b">
+        <Reveal><div className="phil-b-kw">— {t.philKw}</div></Reveal>
+        <Reveal delay={1}><p className="phil-b-body">{t.philBody}</p></Reveal>
+      </div>
+    </section>
+  );
+}
+
+function EditorialB({ t }) {
+  return (
+    <section className="editorial-b" id="editorial">
+      <Reveal><div className="editorial-b-kw">— {t.editorialKw}</div></Reveal>
+      <div className="editorial-b-grid">
+        {t.cards.map((c, i) => (
+          <Reveal key={i} delay={i} className="card-b">
+            <div className="card-b-img-wrap"><img src={c.img} alt={c.title} /></div>
+            <div className="card-b-num">
+              <img src="../assets/b/symbol.svg" alt="" aria-hidden="true" className="card-num-symbol" />
+              {c.num}
+            </div>
+            <h3 className="card-b-title">{c.title}</h3>
+            <p className="card-b-body">{c.body}</p>
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function TaglineB({ t }) {
+  return (
+    <section className="tagline-b">
+      <div className="tagline-b-inner">
+        <Reveal><div className="tagline-b-kw">— {t.taglineKw}</div></Reveal>
+        <Reveal delay={1}><p className="tagline-b-text">{t.tagline}</p></Reveal>
+        <Reveal delay={2}><p className="tagline-b-sub">{t.taglineSub}</p></Reveal>
+      </div>
+    </section>
+  );
+}
+
+function VisitB({ t }) {
+  return (
+    <section className="visit-b pattern-section" id="visit">
+      <div className="visit-b-inner">
+        <div>
+          <Reveal><h2>{t.visitTitle}</h2></Reveal>
+          <Reveal delay={1}><p className="visit-b-addr">{t.visitAddr}</p></Reveal>
+          <Reveal delay={2}><button className="visit-b-cta">{t.visitCta} <span>→</span></button></Reveal>
+        </div>
+        <Reveal delay={1}>
+          <div className="visit-b-map">
+            <div className="map-b-grid" />
+            <div className="map-b-pin">
+              <div className="map-b-dot" />
+              <div className="map-b-label">ediV · Cheongdam</div>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function FootB({ t }) {
+  return (
+    <footer className="foot-b">
+      <div className="foot-b-inner">
+        <div>
+          <div className="foot-b-brand-logo"><img src="../assets/b/logo.svg" alt="ediV clinic" /></div>
+          <p className="foot-b-desc">{t.footDesc}</p>
+          <div className="foot-b-social">
+            <a href="#" aria-label="Instagram">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg>
+            </a>
+            <a href="#" aria-label="X">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M4 4l16 16M20 4L4 20"/></svg>
+            </a>
+          </div>
+        </div>
+        {t.footCols.map((col, i) => (
+          <div className="foot-b-col" key={i}>
+            <h4>{col.h}</h4>
+            <ul>{col.items.map((it, j) => <li key={j}><a href="#">{it}</a></li>)}</ul>
+          </div>
+        ))}
+      </div>
+      <div className="foot-b-bottom">
+        <span>{t.footCopy}</span>
+        <span>Seoul · Cheongdam</span>
+      </div>
+    </footer>
+  );
+}
+
+function AppB() {
+  const [lang, setLangState] = useState(() => { try { return localStorage.getItem("ediv_lang") || "ko"; } catch(e) { return "ko"; } });
+  const setLang = (l) => { setLangState(l); try { localStorage.setItem("ediv_lang", l); } catch(e) {} };
+  const t = COPY_B[lang];
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 40);
+    fn();
+    window.addEventListener("scroll", fn, { passive: true });
+    return () => window.removeEventListener("scroll", fn);
+  }, []);
+  useEffect(() => { document.documentElement.lang = lang === "ko" ? "ko" : "en"; }, [lang]);
+  return (
+    <>
+      <NavB lang={lang} setLang={setLang} t={t} scrolled={scrolled} />
+      <main>
+        <HeroB t={t} />
+        <div className="divider-b" />
+        <PhilB t={t} />
+        <EditorialB t={t} />
+        <TaglineB t={t} />
+        <VisitB t={t} />
+        <FootB t={t} />
+      </main>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<AppB />);
+</script>
+</body>
+</html>
