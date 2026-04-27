@@ -985,19 +985,29 @@ button { font-family: inherit; letter-spacing: inherit; cursor: pointer; }
     -webkit-mask-image: radial-gradient(ellipse 95% 88% at 68% 52%, black 30%, transparent 85%);
     mask-image: radial-gradient(ellipse 95% 88% at 68% 52%, black 30%, transparent 85%);
   }
+  /* ── is-image: 모바일 전용 레이아웃 ── */
+  .hero-portrait.is-image {
+    aspect-ratio: unset;
+    height: 76vh;
+  }
+  .hero-portrait.is-image .portrait-frame {
+    overflow: hidden;
+  }
   .hero-portrait.is-image .hero-portrait-img {
-    width: auto;
-    height: 55%;
-    max-width: 75%;
-    top: 8%;
-    right: 50%;
-    transform: translateX(50%);
-    -webkit-mask-image: none;
-    mask-image: none;
-    object-position: top center;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    top: 0;
+    left: 0;
+    right: auto;
+    transform: none;
+    object-fit: contain;
+    object-position: center top;
+    -webkit-mask-image: linear-gradient(to bottom, black 75%, transparent 96%);
+    mask-image: linear-gradient(to bottom, black 75%, transparent 96%);
   }
   .hero-portrait.is-image.in .hero-portrait-img {
-    transform: translateX(50%);
+    transform: none;
   }
   .philosophy, .editorial, .tagline-band, .visit, .foot { padding-left: 24px; padding-right: 24px; }
   .philosophy-inner { grid-template-columns: 1fr; gap: 24px; }
