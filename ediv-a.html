@@ -279,6 +279,30 @@ footer { background: var(--c1); border-top: 0.5px solid var(--c2); padding: 40px
 .footer-symbol img { height: 18px; opacity: 0.3; }
 .footer-copy { font-size: 10px; color: var(--c3); opacity: 0.35; letter-spacing: 0.06em; font-family: 'Cormorant Garamond', serif; }
 
+/* ─── HERO ENTRANCE ─────────────────────────────────────── */
+@keyframes heroUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-headline {
+  animation: heroUp 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
+}
+.hero-sub {
+  animation: heroUp 1.3s cubic-bezier(0.22, 1, 0.36, 1) 0.65s both;
+}
+
+/* ─── SCROLL REVEAL ─────────────────────────────────────── */
+.rv {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.rv.rv-in {
+  opacity: 1;
+  transform: none;
+}
+
 /* ─── Responsive ─────────────────────────────────────────── */
 @media (max-width: 900px) {
   .main-nav { padding: 0 24px; }
@@ -498,15 +522,64 @@ footer { background: var(--c1); border-top: 0.5px solid var(--c2); padding: 40px
 
 <script>
 (function() {
+  // ── Nav show on scroll ──────────────────────────────────
   const nav = document.querySelector('.main-nav');
   function onScroll() {
-    if (window.scrollY > 60) {
-      nav.classList.add('nav-visible');
-    } else {
-      nav.classList.remove('nav-visible');
-    }
+    nav.classList.toggle('nav-visible', window.scrollY > 60);
   }
   window.addEventListener('scroll', onScroll, { passive: true });
+
+  // ── Hero video parallax ─────────────────────────────────
+  const heroVid = document.querySelector('.hero-video');
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (heroVid && y < window.innerHeight * 1.2) {
+      heroVid.style.transform = `translateY(${y * 0.18}px)`;
+    }
+  }, { passive: true });
+
+  // ── Scroll reveal ───────────────────────────────────────
+  // Elements to reveal (in order of page flow)
+  const targets = [
+    '.section-header',
+    '.intro-statement',
+    '.intro-body',
+    '.tag-row',
+    '.manifesto-inner',
+    '.spread-visual',
+    '.spread-text',
+    '.cards-intro',
+    '.contact-text',
+    '.contact-action',
+  ];
+
+  targets.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => el.classList.add('rv'));
+  });
+
+  // Feature items: stagger
+  document.querySelectorAll('.feature-item').forEach((el, i) => {
+    el.classList.add('rv');
+    el.style.transitionDelay = `${i * 0.13}s`;
+  });
+
+  // Cards: stagger
+  document.querySelectorAll('.card').forEach((el, i) => {
+    el.classList.add('rv');
+    el.style.transitionDelay = `${i * 0.1}s`;
+  });
+
+  // IntersectionObserver
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('rv-in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
 })();
 </script>
 
