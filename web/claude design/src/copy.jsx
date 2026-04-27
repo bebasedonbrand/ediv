@@ -13,9 +13,9 @@ const COPY = {
     navCare: "진료안내",
     navBook: "예약",
     eyebrow: "\n",
-    heroLine1: ["맑고", "우아한"],
-    heroLine2: ["인상을 만드는 곳."],
-    heroSub: "미학과 휴식의 기준, EDIV.",
+    heroLine1: ["미학과", "휴식의"],
+    heroLine2: ["기준."],
+    heroSub: "A New Standard of Care, EDIV.",
     heroMeta: [
       { k: "SINCE", v: "2019 · Gangnam, Seoul" },
       { k: "PHILOSOPHY", v: "덜어내고 채우다 — Less and fill." },
@@ -24,28 +24,26 @@ const COPY = {
     scrollHint: "Scroll",
     philK: "Philosophy",
     philBody: [
-      "기록하는 곳, 기억하는 곳.",
-      "\n에디브는 결과 인상을 읽고 기록합니다.",
-      "\n오늘 쌓은 ", ["em", "한겹"], "이 내일의 모습이 됩니다.",
-      "\n기록이 쌓이면, 변화가 보입니다.",
-      "\n기록이 쌓이면, ", ["em", "인상"], "이 달라집니다.",
+      "에디브는 미학과 휴식, 고객을 위한 ", ["em", "분명한 기준"], "이 있습니다.",
+      "\n맑고 선명한 분위기를 위해 과하지 않게, 그러나 부족함 없이.",
+      "\n한번의 시술이 아닌 ", ["em", "꾸준한 관리"], "의 기준을 세웁니다.",
     ],
     cards: [
       {
         num: "01",
-        title: "높은 기준이 좋은 결과를 만듭니다.",
+        title: "미학과 휴식의 시간을\n삶 안에 들이는 것",
         body: "경과가 살아나는 시간, 나를 진심으로 이해하는 무심한 손길.",
         img: { label: "M-mark close-up", cls: "ph", src: _cardSrc(0, "assets/card-01.jpg") },
       },
       {
         num: "02",
-        title: "인상에서 차이를 만드는 곳",
+        title: "더 건강하게,\n더 나다운 모습으로",
         body: "당신의 결과 인상을 읽고, 섬세하게 설계합니다.",
         img: { label: "Model · side profile", cls: "ph-2", src: _cardSrc(1, "assets/card-02.png") },
       },
       {
         num: "03",
-        title: "기록이 쌓이면 인상이 달라집니다.",
+        title: "맑고 우아한\n인상을 만드는 곳",
         body: "오늘 남긴 한 장이 내일의 표정이 됩니다.\n에디브는 기록으로 기억됩니다.",
         img: { label: "Archive · ediV volume", cls: "ph-3", src: _cardSrc(2, "assets/card-03.png") },
       },
@@ -82,9 +80,9 @@ const COPY = {
     navCare: "Care",
     navBook: "Book",
     eyebrow: "\n",
-    heroLine1: ["A new"],
-    heroLine2: ["standard of care."],
-    heroSub: "The standard of aesthetics and rest. EDIV.",
+    heroLine1: ["A New Standard"],
+    heroLine2: ["of Care."],
+    heroSub: "A New Standard of Care, EDIV.",
     heroMeta: [
       { k: "SINCE", v: "2019 · Gangnam, Seoul" },
       { k: "PHILOSOPHY", v: "Less and fill — 덜어내고 채우다." },
@@ -93,8 +91,9 @@ const COPY = {
     scrollHint: "Scroll",
     philK: "Philosophy",
     philBody: [
-      "We ", ["em", "take away"], ". Then we fill. ",
-      "Upon the grain we've recorded, we ", ["em", "design"], " an impression that is yours alone.",
+      "ediV holds a ", ["em", "clear standard"], " for aesthetics, rest, and care.",
+      "\nNot excessive, yet never lacking — for a clear and refined atmosphere.",
+      "\nWe set the standard of ", ["em", "consistent care"], ", not a single procedure.",
     ],
     cards: [
       {
