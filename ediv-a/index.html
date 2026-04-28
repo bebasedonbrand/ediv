@@ -109,6 +109,16 @@ a { color: inherit; text-decoration: none; }
     rgba(227,214,201,0.58) 100%
   );
 }
+.hero-veil {
+  position: absolute; inset: 0; z-index: 1;
+  background: #f3eee9;
+  pointer-events: none;
+  animation: veilLift 2.4s cubic-bezier(0.4, 0, 0.15, 1) 0.4s forwards;
+}
+@keyframes veilLift {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
 .hero-content {
   position: relative; z-index: 2;
   width: 100%;
@@ -121,8 +131,8 @@ a { color: inherit; text-decoration: none; }
   font-size: clamp(32px, 4.4vw, 67px);
   font-weight: 300;
   font-family: 'Noto Serif KR', serif;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
   color: var(--c3);
 }
 .hero-headline em { font-style: normal; font-family: 'Noto Serif KR', serif; color: var(--c3); opacity: 0.7; font-size: 1em; }
@@ -354,8 +364,9 @@ footer { background: var(--c1); border-top: 0.5px solid var(--c2); padding: 40px
 <!-- HERO -->
 <section class="hero">
   <video class="hero-video" autoplay muted loop playsinline>
-    <source src="../assets/a/ediv_hero.mp4" type="video/mp4" />
+    <source src="../assets/a/Ediv_A_HERO.mp4" type="video/mp4" />
   </video>
+  <div class="hero-veil"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <h1 class="hero-headline">
@@ -427,7 +438,7 @@ footer { background: var(--c1); border-top: 0.5px solid var(--c2); padding: 40px
 <!-- SPREAD -->
 <div class="spread">
   <div class="spread-visual">
-    <img src="../assets/a/card-01.png" alt="ediV treatment" />
+    <img src="../assets/a/card-00.jpg" alt="ediV treatment" />
     <span class="spread-caption">Program 01 — Contour</span>
   </div>
   <div class="spread-text">
@@ -464,7 +475,7 @@ footer { background: var(--c1); border-top: 0.5px solid var(--c2); padding: 40px
     </div>
     <div class="card">
       <div class="card-img-wrap">
-        <img src="../assets/a/card-02.jpg" alt="Card 02" />
+        <img src="../assets/a/card-02_new.png" alt="Card 02" />
       </div>
       <div class="card-info">
         <p class="card-cat">Contour</p>
