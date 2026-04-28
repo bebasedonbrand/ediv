@@ -28,7 +28,7 @@ a { color: inherit; text-decoration: none; }
   --c1: #eee6de;
   --c2: #e3d6c9;
   --c3: #817870;
-  --nav-h: 58px;
+  --nav-h: 68px;
 }
 
 /* ─── NAV ────────────────────────────────────────────────── */
@@ -40,13 +40,20 @@ a { color: inherit; text-decoration: none; }
   background: rgba(129,120,112,0.96);
   backdrop-filter: blur(8px);
   border-bottom: 0.5px solid rgba(243,238,233,0.15);
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: transform 0.6s cubic-bezier(0.25,0,0,1), opacity 0.5s ease;
+}
+.main-nav.nav-visible {
+  transform: translateY(0);
+  opacity: 1;
 }
 .nav-logo {
   display: flex; align-items: center;
   flex-shrink: 0;
 }
 .nav-logo img {
-  height: 15px;
+  height: 20px;
   width: auto;
   display: block;
   filter: brightness(0) invert(1) opacity(0.9);
@@ -90,6 +97,7 @@ a { color: inherit; text-decoration: none; }
   position: absolute; inset: 0;
   width: 100%; height: 100%;
   object-fit: cover;
+  object-position: center 22%;
   opacity: 0.72;
 }
 .hero-overlay {
@@ -101,6 +109,16 @@ a { color: inherit; text-decoration: none; }
     rgba(227,214,201,0.58) 100%
   );
 }
+.hero-veil {
+  position: absolute; inset: 0; z-index: 1;
+  background: #f3eee9;
+  pointer-events: none;
+  animation: veilLift 2.4s cubic-bezier(0.4, 0, 0.15, 1) 0.4s forwards;
+}
+@keyframes veilLift {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
 .hero-content {
   position: relative; z-index: 2;
   width: 100%;
@@ -110,14 +128,14 @@ a { color: inherit; text-decoration: none; }
   align-items: end;
 }
 .hero-headline {
-  font-size: clamp(40px, 5.5vw, 84px);
+  font-size: clamp(32px, 4.4vw, 67px);
   font-weight: 300;
   font-family: 'Noto Serif KR', serif;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
   color: var(--c3);
 }
-.hero-headline em { font-style: italic; font-family: 'Cormorant Garamond', serif; color: var(--c3); opacity: 0.7; font-size: 1.1em; }
+.hero-headline em { font-style: normal; font-family: 'Noto Serif KR', serif; color: var(--c3); opacity: 0.7; font-size: 1em; }
 .hero-sub { text-align: right; padding-bottom: 6px; }
 .hero-sub p {
   font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
@@ -147,7 +165,7 @@ section { width: 100%; }
 
 /* ─── INTRO ──────────────────────────────────────────────── */
 .intro {
-  padding: 72px 40px 80px;
+  padding: 112px 40px 128px;
   display: grid; grid-template-columns: 5fr 1px 5fr; gap: 0 60px; align-items: start;
 }
 .intro-divider { background: var(--c2); align-self: stretch; }
@@ -155,7 +173,7 @@ section { width: 100%; }
   font-size: clamp(28px, 3.2vw, 46px); font-weight: 300; line-height: 1.2;
   letter-spacing: -0.01em; color: var(--c3);
 }
-.intro-statement em { font-style: italic; opacity: 0.6; }
+.intro-statement em { font-style: normal; font-family: 'Noto Serif KR', serif; opacity: 0.6; }
 .intro-body { padding-top: 8px; }
 .intro-body p { font-size: 15px; line-height: 1.85; color: var(--c3); opacity: 0.7; margin-bottom: 20px; font-weight: 300; }
 .intro-body p:last-child { margin-bottom: 0; }
@@ -173,23 +191,23 @@ section { width: 100%; }
 }
 
 /* ─── FEATURE GRID ───────────────────────────────────────── */
-.feature-grid { padding: 56px 40px 0; display: grid; grid-template-columns: repeat(3, 1fr); }
-.feature-item { padding: 0 40px 56px 0; border-right: 0.5px solid var(--c2); }
+.feature-grid { padding: 80px 40px 96px; display: grid; grid-template-columns: repeat(3, 1fr); }
+.feature-item { padding: 0 40px 72px 0; border-right: 0.5px solid var(--c2); }
 .feature-item:last-child { border-right: none; padding-left: 40px; padding-right: 0; }
 .feature-item:nth-child(2) { padding-left: 40px; }
 .feature-number { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--c3); opacity: 0.35; margin-bottom: 20px; display: block; }
-.feature-item h3 { font-size: 24px; font-weight: 400; line-height: 1.25; color: var(--c3); margin-bottom: 14px; }
+.feature-item h3 { font-size: 24px; font-weight: 400; line-height: 1.25; color: var(--c3); margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.04em; }
 .feature-item p { font-size: 14px; line-height: 1.8; color: var(--c3); opacity: 0.65; font-weight: 300; }
 
 /* ─── EDITORIAL SPREAD ───────────────────────────────────── */
-.spread { margin-top: 72px; background: var(--c1); display: grid; grid-template-columns: 1fr 1fr; min-height: 520px; }
+.spread { margin-top: 0; background: var(--c1); display: grid; grid-template-columns: 1fr 1fr; min-height: 520px; }
 .spread-visual { position: relative; overflow: hidden; }
 .spread-visual img { width: 100%; height: 100%; object-fit: cover; }
 .spread-caption { position: absolute; bottom: 20px; left: 20px; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c3); opacity: 0.5; }
 .spread-text { padding: 64px 56px; display: flex; flex-direction: column; justify-content: center; border-left: 0.5px solid var(--c2); }
 .spread-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--c3); opacity: 0.4; margin-bottom: 28px; }
 .spread-quote { font-size: clamp(22px, 2.6vw, 36px); font-weight: 300; line-height: 1.35; color: var(--c3); margin-bottom: 28px; }
-.spread-quote em { font-style: italic; opacity: 0.65; }
+.spread-quote em { font-style: normal; font-family: 'Noto Serif KR', serif; opacity: 0.65; }
 .spread-body { font-size: 14px; line-height: 1.85; color: var(--c3); opacity: 0.65; font-weight: 300; margin-bottom: 36px; }
 .btn-line {
   display: inline-flex; align-items: center; gap: 12px;
@@ -201,10 +219,10 @@ section { width: 100%; }
 .btn-line::after { content: '→'; font-size: 13px; }
 
 /* ─── CARD ROW ───────────────────────────────────────────── */
-.cards-section { padding: 80px 40px; }
+.cards-section { padding: 112px 40px; }
 .cards-intro { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 40px; }
-.cards-headline { font-size: clamp(36px, 4vw, 60px); font-weight: 300; line-height: 1; color: var(--c3); letter-spacing: -0.01em; }
-.cards-headline em { font-style: italic; opacity: 0.55; }
+.cards-headline { font-size: clamp(36px, 4vw, 60px); font-weight: 300; line-height: 1; color: var(--c3); letter-spacing: 0.04em; text-transform: uppercase; }
+.cards-headline em { font-style: normal; opacity: 0.55; }
 .cards-link { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--c3); opacity: 0.5; border-bottom: 0.5px solid currentColor; padding-bottom: 2px; }
 .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--c2); }
 .card { background: var(--c0); overflow: hidden; }
@@ -219,7 +237,7 @@ section { width: 100%; }
 
 /* ─── MANIFESTO ──────────────────────────────────────────── */
 .manifesto {
-  background: var(--c2); padding: 96px 40px; text-align: center;
+  background: var(--c2); padding: 120px 40px; text-align: center;
   position: relative; overflow: hidden;
 }
 .manifesto::before {
@@ -230,7 +248,7 @@ section { width: 100%; }
 .manifesto-inner { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
 .manifesto-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--c3); opacity: 0.45; margin-bottom: 36px; }
 .manifesto-text { font-size: clamp(30px, 4vw, 56px); font-weight: 300; line-height: 1.18; color: var(--c3); letter-spacing: -0.01em; }
-.manifesto-text em { font-style: italic; opacity: 0.6; }
+.manifesto-text em { font-style: normal; font-family: 'Noto Serif KR', serif; opacity: 0.6; }
 .manifesto-rule { width: 32px; height: 0.5px; background: var(--c3); opacity: 0.35; margin: 40px auto; }
 .manifesto-note { font-size: 13px; line-height: 1.75; color: var(--c3); opacity: 0.6; font-weight: 300; }
 
@@ -240,13 +258,20 @@ section { width: 100%; }
 .phil-item:last-child { border-right: none; padding-left: 32px; padding-right: 0; }
 .phil-item:nth-child(2), .phil-item:nth-child(3) { padding-left: 32px; }
 .phil-num { font-size: 9px; letter-spacing: 0.2em; color: var(--c3); opacity: 0.3; margin-bottom: 22px; display: block; }
-.phil-item h4 { font-size: 16px; font-weight: 400; line-height: 1.3; color: var(--c3); margin-bottom: 12px; }
+.phil-item h4 { font-size: 16px; font-weight: 400; line-height: 1.3; color: var(--c3); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
 .phil-item p { font-size: 13px; line-height: 1.75; color: var(--c3); opacity: 0.6; font-weight: 300; }
 
 /* ─── CONTACT BAND ───────────────────────────────────────── */
-.contact-band { background: var(--c3); padding: 64px 40px; display: flex; align-items: center; justify-content: space-between; }
+.contact-band { background: var(--c3); padding: 96px 40px; display: flex; align-items: center; justify-content: space-between; position: relative; overflow: hidden; }
+.contact-band::before {
+  content: ''; position: absolute; inset: 0;
+  background: url('assets/a/pattern.svg') repeat;
+  background-size: 576px 324px; opacity: 0.2;
+  filter: brightness(0) invert(1);
+  pointer-events: none;
+}
 .contact-text h2 { font-size: clamp(28px, 3.5vw, 52px); font-weight: 300; color: var(--c0); line-height: 1.1; }
-.contact-text h2 em { font-style: italic; opacity: 0.65; }
+.contact-text h2 em { font-style: normal; font-family: 'Noto Serif KR', serif; opacity: 0.65; }
 .contact-text p { font-size: 13px; color: var(--c1); opacity: 0.6; margin-top: 12px; font-weight: 300; }
 .contact-action { display: flex; gap: 16px; }
 .btn-light { border: 0.5px solid rgba(243,238,233,0.5); padding: 13px 28px; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--c0); opacity: 0.8; }
@@ -263,6 +288,30 @@ footer { background: var(--c1); border-top: 0.5px solid var(--c2); padding: 40px
 .footer-right { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 16px; }
 .footer-symbol img { height: 18px; opacity: 0.3; }
 .footer-copy { font-size: 10px; color: var(--c3); opacity: 0.35; letter-spacing: 0.06em; font-family: 'Cormorant Garamond', serif; }
+
+/* ─── HERO ENTRANCE ─────────────────────────────────────── */
+@keyframes heroUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-headline {
+  animation: heroUp 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
+}
+.hero-sub {
+  animation: heroUp 1.3s cubic-bezier(0.22, 1, 0.36, 1) 0.65s both;
+}
+
+/* ─── SCROLL REVEAL ─────────────────────────────────────── */
+.rv {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.rv.rv-in {
+  opacity: 1;
+  transform: none;
+}
 
 /* ─── Responsive ─────────────────────────────────────────── */
 @media (max-width: 900px) {
@@ -305,7 +354,6 @@ footer { background: var(--c1); border-top: 0.5px solid var(--c2); padding: 40px
   <ul class="nav-menu">
     <li><a href="#">Program</a></li>
     <li><a href="#">About</a></li>
-    <li><a href="#">Editorial</a></li>
     <li><a href="#">Contact</a></li>
   </ul>
   <div class="nav-symbol">
@@ -316,24 +364,19 @@ footer { background: var(--c1); border-top: 0.5px solid var(--c2); padding: 40px
 <!-- HERO -->
 <section class="hero">
   <video class="hero-video" autoplay muted loop playsinline>
-    <source src="assets/a/ediv_hero.mp4" type="video/mp4" />
+    <source src="assets/a/Ediv_A_HERO.mp4" type="video/mp4" />
   </video>
+  <div class="hero-veil"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <h1 class="hero-headline">
-      결을 읽고,<br/>
-      <em>인상을</em><br/>
-      설계합니다
+      한 사람만을 위한 변화,<br/>
+      한 사람만을 위한 기록
     </h1>
     <div class="hero-sub">
-      <p>Aesthetic Medicine</p>
+      <p>Your archive of beauty.</p>
       <p>Seoul, Korea</p>
-      <p>Est. 2024</p>
     </div>
-  </div>
-  <div class="hero-scroll">
-    <span>Scroll</span>
-    <div class="scroll-line"></div>
   </div>
 </section>
 
@@ -345,14 +388,13 @@ footer { background: var(--c1); border-top: 0.5px solid var(--c2); padding: 40px
 </div>
 <div class="intro">
   <p class="intro-statement">
-    당신만의<br/>
-    아름다움을<br/>
-    <em>정의합니다</em>
+    당신의 피부와 윤곽을<br/>
+    가장 정확하게,<br/>
+    <em>오래 기억하는 곳.</em>
   </p>
   <div class="intro-divider"></div>
   <div class="intro-body">
-    <p>ediV clinic은 획일화된 미의 기준 대신, 개인의 고유한 아름다움을 발견하고 가능성을 편집합니다. 의학적 정밀함과 예술적 감각이 교차하는 지점에서 당신을 위한 서사를 만들어냅니다.</p>
-    <p>모든 시술은 정면이 아닌 전체로, 표면이 아닌 본질로 접근합니다. 결과는 단순한 변화가 아니라 진정한 자기표현입니다.</p>
+    <p>에디브에는 오로지 당신만을 위한 기록이 있습니다. 당신의 피부와 윤곽을 가장 빈틈없이 정확하게, 오래 기억하는 곳. 에디브는 감각을 더한 데이터로 피부를 기록하며, 변화를 설계합니다.</p>
     <div class="tag-row">
       <span class="tag">안면 윤곽</span>
       <span class="tag">피부 재생</span>
@@ -362,8 +404,12 @@ footer { background: var(--c1); border-top: 0.5px solid var(--c2); padding: 40px
   </div>
 </div>
 
-<!-- PATTERN BAND -->
-<div class="pattern-band"></div>
+<!-- MANIFESTO -->
+<section class="manifesto">
+  <div class="manifesto-inner">
+    <p class="manifesto-text" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:clamp(32px,4.5vw,64px); letter-spacing:0.02em;">Your Archive of Beauty</p>
+  </div>
+</section>
 
 <!-- FEATURE GRID -->
 <hr class="section-rule" />
@@ -374,35 +420,33 @@ footer { background: var(--c1); border-top: 0.5px solid var(--c2); padding: 40px
 <div class="feature-grid">
   <div class="feature-item">
     <span class="feature-number">I</span>
-    <h3>Precision<br/>Diagnosis</h3>
-    <p>정밀한 안면 분석을 통해 각 개인의 구조적 특성과 균형을 파악하고, 최적의 접근 방식을 설계합니다.</p>
+    <h3>One<br/>Archive</h3>
+    <p>고객님의 상태를 정확하고 정밀하게 측정하고 기억하며, 오로지 고객님만의 시술과 관리를 설계합니다.</p>
   </div>
   <div class="feature-item">
     <span class="feature-number">II</span>
-    <h3>Artisan<br/>Technique</h3>
-    <p>의학과 예술의 경계에서 개발된 독자적 시술 방식으로, 자연스럽고 조화로운 결과를 실현합니다.</p>
+    <h3>One Face,<br/>One Design</h3>
+    <p>한 사람만을 위해 정확히 측정하고, 변화를 설계합니다.</p>
   </div>
   <div class="feature-item">
     <span class="feature-number">III</span>
-    <h3>Lasting<br/>Narrative</h3>
-    <p>단발적 시술이 아닌 장기적 관계를 통해 당신의 아름다움이 시간과 함께 깊어지도록 함께합니다.</p>
+    <h3>One<br/>Change</h3>
+    <p>머무는 시간이 길어질수록 더욱 정확한 기록으로 세상에 단 하나뿐인 변화와 휴식을 드리겠습니다.</p>
   </div>
 </div>
 
 <!-- SPREAD -->
 <div class="spread">
   <div class="spread-visual">
-    <img src="assets/a/card-01.png" alt="ediV treatment" />
+    <img src="assets/a/card-00.jpg" alt="ediV treatment" />
     <span class="spread-caption">Program 01 — Contour</span>
   </div>
   <div class="spread-text">
     <p class="spread-label">Featured Program</p>
     <blockquote class="spread-quote">
-      아름다움은<br/>
-      발견되는 것이 아니라<br/>
-      <em>편집되는 것입니다</em>
+      같은 얼굴과 피부가 없듯,<br/>
+      <em>에디브에서 같은 시술은 없습니다.</em>
     </blockquote>
-    <p class="spread-body">ediV의 시그니처 윤곽 프로그램은 얼굴의 입체적 구조를 세밀하게 분석하여, 자연스럽고 지속적인 변화를 이끌어냅니다. 단 한 번의 시술이 아닌, 당신만의 서사가 시작되는 출발점입니다.</p>
     <a href="#" class="btn-line">프로그램 알아보기</a>
   </div>
 </div>
@@ -415,7 +459,7 @@ footer { background: var(--c1); border-top: 0.5px solid var(--c2); padding: 40px
     <span class="section-title">Editorial</span>
   </div>
   <div class="cards-intro">
-    <h2 class="cards-headline">Our<br/><em>Stories</em></h2>
+    <h2 class="cards-headline">Your<br/><em>Archive</em></h2>
     <a href="#" class="cards-link">모든 아티클 보기</a>
   </div>
   <div class="cards-grid">
@@ -425,17 +469,17 @@ footer { background: var(--c1); border-top: 0.5px solid var(--c2); padding: 40px
       </div>
       <div class="card-info">
         <p class="card-cat">Skin</p>
-        <h3 class="card-title">재생의 언어:<br/>피부가 말하는 것들</h3>
+        <h3 class="card-title">기억된 피부:<br/>기록이 시작되는 순간</h3>
         <p class="card-sub">2024 Winter</p>
       </div>
     </div>
     <div class="card">
       <div class="card-img-wrap">
-        <img src="assets/a/card-02.jpg" alt="Card 02" />
+        <img src="assets/a/card-02_new.png" alt="Card 02" />
       </div>
       <div class="card-info">
         <p class="card-cat">Contour</p>
-        <h3 class="card-title">균형이라는<br/>이름의 아름다움</h3>
+        <h3 class="card-title">하나의 얼굴,<br/>하나의 설계</h3>
         <p class="card-sub">2024 Autumn</p>
       </div>
     </div>
@@ -445,62 +489,17 @@ footer { background: var(--c1); border-top: 0.5px solid var(--c2); padding: 40px
       </div>
       <div class="card-info">
         <p class="card-cat">Lifting</p>
-        <h3 class="card-title">시간을 거슬러:<br/>리프팅의 미학</h3>
+        <h3 class="card-title">시간을 기억하는<br/>리프팅</h3>
         <p class="card-sub">2024 Summer</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- MANIFESTO -->
-<section class="manifesto">
-  <div class="manifesto-inner">
-    <p class="manifesto-label">ediV Manifesto</p>
-    <p class="manifesto-text">
-      우리는 완벽함을 추구하지 않습니다.<br/>
-      당신 안에 있는 <em>가장 진실한</em><br/>
-      아름다움을 찾아냅니다.
-    </p>
-    <div class="manifesto-rule"></div>
-    <p class="manifesto-note">
-      edit your division — 경계를 넘고, 가능성을 편집하며,<br/>새로운 아름다움의 서사를 함께 씁니다.
-    </p>
-  </div>
-</section>
-
-<!-- PHILOSOPHY -->
-<hr class="section-rule" />
-<div class="section-header">
-  <span class="section-index">04</span>
-  <span class="section-title">Values</span>
-</div>
-<div class="philosophy">
-  <div class="phil-item">
-    <span class="phil-num">01</span>
-    <h4>Individuality</h4>
-    <p>모든 사람은 고유한 아름다움을 가집니다. 우리는 그 차이를 존중하며 당신만의 답을 찾습니다.</p>
-  </div>
-  <div class="phil-item">
-    <span class="phil-num">02</span>
-    <h4>Integrity</h4>
-    <p>의학적 근거와 안전을 최우선으로, 투명하고 정직한 상담과 시술을 약속합니다.</p>
-  </div>
-  <div class="phil-item">
-    <span class="phil-num">03</span>
-    <h4>Artistry</h4>
-    <p>과학적 정밀함 위에 예술적 감각을 더해, 자연스럽고 세련된 결과를 만들어냅니다.</p>
-  </div>
-  <div class="phil-item">
-    <span class="phil-num">04</span>
-    <h4>Continuity</h4>
-    <p>한 번의 만남이 아닌 지속적인 관계로, 당신의 아름다움이 성장하도록 함께합니다.</p>
-  </div>
-</div>
-
 <!-- CONTACT -->
 <div class="contact-band">
   <div class="contact-text">
-    <h2>당신의 이야기를<br/><em>시작할 준비</em>가 됐나요?</h2>
+    <h2>당신의 기록을<br/><em>시작할 준비</em>가 됐나요?</h2>
     <p>서울시 강남구 | Mon–Sat 10:00–19:00</p>
   </div>
   <div class="contact-action">
@@ -513,12 +512,11 @@ footer { background: var(--c1); border-top: 0.5px solid var(--c2); padding: 40px
 <footer>
   <div class="footer-brand">
     <img src="assets/a/logo.svg" alt="ediV clinic" />
-    <p>edit your division<br/>서울시 강남구 청담동</p>
+    <p>Your archive of beauty.<br/>서울시 강남구 청담동</p>
   </div>
   <nav class="footer-nav">
     <a href="#">Program</a>
     <a href="#">About</a>
-    <a href="#">Editorial</a>
     <a href="#">Contact</a>
     <a href="#">Privacy</a>
   </nav>
@@ -529,6 +527,69 @@ footer { background: var(--c1); border-top: 0.5px solid var(--c2); padding: 40px
     <p class="footer-copy">© 2024 ediV clinic. All rights reserved.</p>
   </div>
 </footer>
+
+<script>
+(function() {
+  // ── Nav show on scroll ──────────────────────────────────
+  const nav = document.querySelector('.main-nav');
+  function onScroll() {
+    nav.classList.toggle('nav-visible', window.scrollY > 60);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // ── Hero video parallax ─────────────────────────────────
+  const heroVid = document.querySelector('.hero-video');
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (heroVid && y < window.innerHeight * 1.2) {
+      heroVid.style.transform = `translateY(${y * 0.18}px)`;
+    }
+  }, { passive: true });
+
+  // ── Scroll reveal ───────────────────────────────────────
+  // Elements to reveal (in order of page flow)
+  const targets = [
+    '.section-header',
+    '.intro-statement',
+    '.intro-body',
+    '.tag-row',
+    '.manifesto-inner',
+    '.spread-visual',
+    '.spread-text',
+    '.cards-intro',
+    '.contact-text',
+    '.contact-action',
+  ];
+
+  targets.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => el.classList.add('rv'));
+  });
+
+  // Feature items: stagger
+  document.querySelectorAll('.feature-item').forEach((el, i) => {
+    el.classList.add('rv');
+    el.style.transitionDelay = `${i * 0.13}s`;
+  });
+
+  // Cards: stagger
+  document.querySelectorAll('.card').forEach((el, i) => {
+    el.classList.add('rv');
+    el.style.transitionDelay = `${i * 0.1}s`;
+  });
+
+  // IntersectionObserver
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('rv-in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+})();
+</script>
 
 </body>
 </html>
