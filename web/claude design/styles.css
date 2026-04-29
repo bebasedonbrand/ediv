@@ -988,7 +988,7 @@ button { font-family: inherit; letter-spacing: inherit; cursor: pointer; }
   /* ── is-image: 모바일 전용 레이아웃 ── */
   .hero-portrait.is-image {
     aspect-ratio: unset;
-    height: 76vh;
+    height: 58vh;
   }
   .hero-portrait.is-image .portrait-frame {
     overflow: hidden;
@@ -1001,10 +1001,10 @@ button { font-family: inherit; letter-spacing: inherit; cursor: pointer; }
     left: 0;
     right: auto;
     transform: none;
-    object-fit: contain;
-    object-position: center top;
-    -webkit-mask-image: linear-gradient(to bottom, black 75%, transparent 96%);
-    mask-image: linear-gradient(to bottom, black 75%, transparent 96%);
+    object-fit: cover;
+    object-position: center 20%;
+    -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 95%);
+    mask-image: linear-gradient(to bottom, black 70%, transparent 95%);
   }
   .hero-portrait.is-image.in .hero-portrait-img {
     transform: none;
