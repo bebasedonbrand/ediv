@@ -49,25 +49,46 @@ function EdivSymbol({ height = 28, style }) {
 
 // ---------- Nav ----------
 function Nav({ lang, setLang, t, scrolled }) {
+  const [open, setOpen] = useState(false);
   return (
-    <nav className={`nav ${scrolled ? "is-scrolled" : ""}`}>
-      <a className="brand" href="#" aria-label="ediV clinic">
-        <Logo height={32} />
-      </a>
-      <div className="nav-pill">
-        <a href="#" className="active" style={{ backgroundColor: "rgb(156, 199, 177)" }}>{t.navHome}</a>
-        <a href="#philosophy">{t.navAbout}</a>
-        <a href="#editorial">{t.navCare}</a>
-        <a href="#visit">{t.navBook}</a>
-      </div>
-      <div className="nav-utility">
-        <div className="lang-toggle">
-          <button className={lang === "ko" ? "on" : ""} onClick={() => setLang("ko")} style={{ backgroundColor: "rgb(156, 199, 177)" }}>KO</button>
-          <span className="sep">·</span>
-          <button className={lang === "en" ? "on" : ""} onClick={() => setLang("en")}>EN</button>
+    <>
+      <nav className={`nav ${scrolled ? "is-scrolled" : ""}`}>
+        <a className="brand" href="#" aria-label="ediV clinic">
+          <Logo height={32} />
+        </a>
+        <div className="nav-pill">
+          <a href="#" className="active" style={{ backgroundColor: "rgb(156, 199, 177)" }}>{t.navHome}</a>
+          <a href="#philosophy">{t.navAbout}</a>
+          <a href="#editorial">{t.navCare}</a>
+          <a href="#visit">{t.navBook}</a>
         </div>
-      </div>
-    </nav>
+        <div className="nav-utility">
+          <div className="lang-toggle">
+            <button className={lang === "ko" ? "on" : ""} onClick={() => setLang("ko")} style={{ backgroundColor: "rgb(156, 199, 177)" }}>KO</button>
+            <span className="sep">·</span>
+            <button className={lang === "en" ? "on" : ""} onClick={() => setLang("en")}>EN</button>
+          </div>
+          <button className={`nav-burger${open ? " is-open" : ""}`} onClick={() => setOpen(!open)} aria-label="메뉴">
+            <span /><span /><span />
+          </button>
+        </div>
+      </nav>
+      {open && (
+        <div className="nav-mobile-overlay" onClick={() => setOpen(false)}>
+          <div className="nav-mobile-links" onClick={e => e.stopPropagation()}>
+            <a href="#" onClick={() => setOpen(false)}>{t.navHome}</a>
+            <a href="#philosophy" onClick={() => setOpen(false)}>{t.navAbout}</a>
+            <a href="#editorial" onClick={() => setOpen(false)}>{t.navCare}</a>
+            <a href="#visit" onClick={() => setOpen(false)}>{t.navBook}</a>
+            <div className="nav-mobile-lang">
+              <button className={lang === "ko" ? "on" : ""} onClick={() => { setLang("ko"); setOpen(false); }}>KO</button>
+              <span>·</span>
+              <button className={lang === "en" ? "on" : ""} onClick={() => { setLang("en"); setOpen(false); }}>EN</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 

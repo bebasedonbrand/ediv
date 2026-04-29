@@ -180,6 +180,32 @@ button { font-family: inherit; letter-spacing: inherit; cursor: pointer; }
   gap: 16px;
   justify-self: end;
 }
+/* 햄버거 버튼 — 데스크탑에서는 숨김 */
+.nav-burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+.nav-burger span {
+  display: block;
+  width: 20px;
+  height: 1.5px;
+  background: var(--ink);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.nav-burger.is-open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-burger.is-open span:nth-child(2) { opacity: 0; }
+.nav-burger.is-open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+/* 모바일 오버레이 — 데스크탑에서는 숨김 */
+.nav-mobile-overlay { display: none; }
 .lang-toggle {
   display: flex;
   align-items: center;
@@ -1017,5 +1043,49 @@ button { font-family: inherit; letter-spacing: inherit; cursor: pointer; }
   .foot-inner { grid-template-columns: 1fr 1fr; }
   .nav { padding: 18px 24px; }
   .nav-links { display: none; }
+  .nav-pill { display: none; }
+  .nav-burger { display: flex; }
+  .nav-mobile-overlay {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    background: rgba(244, 242, 234, 0.97);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    z-index: 39;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-mobile-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 36px;
+  }
+  .nav-mobile-links a {
+    font-family: var(--font-ko);
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+  .nav-mobile-lang {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+    font: 400 11px/1 var(--font-mono);
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+  }
+  .nav-mobile-lang button {
+    background: transparent;
+    border: none;
+    font: inherit;
+    cursor: pointer;
+    color: var(--ink-3);
+  }
+  .nav-mobile-lang button.on { color: var(--ink); }
   .scroll-hint { display: none; }
 }
