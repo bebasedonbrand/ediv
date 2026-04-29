@@ -1011,6 +1011,7 @@ button { font-family: inherit; letter-spacing: inherit; cursor: pointer; }
   }
   .philosophy, .editorial, .tagline-band, .visit, .foot { padding-left: 24px; padding-right: 24px; }
   .philosophy-inner { grid-template-columns: 1fr; gap: 24px; }
+  .phil-body { font-size: 20px; line-height: 1.85; }
   .editorial-grid { grid-template-columns: 1fr; gap: 56px; }
   .visit-inner { grid-template-columns: 1fr; gap: 40px; }
   .foot-inner { grid-template-columns: 1fr 1fr; }
