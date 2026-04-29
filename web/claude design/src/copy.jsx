@@ -24,9 +24,9 @@ const COPY = {
     scrollHint: "Scroll",
     philK: "Philosophy",
     philBody: [
-      "에디브는 미학과 휴식, 고객을 위한 ", ["em", "분명한 기준"], "이 있습니다.",
-      "\n맑고 선명한 분위기를 위해 과하지 않게, 그러나 부족함 없이.",
-      "\n한번의 시술이 아닌 ", ["em", "꾸준한 관리"], "의 기준을 세웁니다.",
+      "에디브는 미학과 휴식,\n고객을 위한 ", ["em", "분명한 기준"], "이 있습니다.",
+      "\n\n맑고 선명한 분위기를 위해\n과하지 않게, 그러나 부족함 없이.",
+      "\n\n한번의 시술이 아닌 ", ["em", "꾸준한 관리"], "의 기준을 세웁니다.",
     ],
     cards: [
       {
@@ -91,9 +91,11 @@ const COPY = {
     scrollHint: "Scroll",
     philK: "Philosophy",
     philBody: [
-      "ediV holds a ", ["em", "clear standard"], " for aesthetics, rest, and care.",
-      "\nNot excessive, yet never lacking — for a clear and refined atmosphere.",
-      "\nWe set the standard of ", ["em", "consistent care"], ", not a single procedure.",
+      "ediV holds a ", ["em", "clear standard"],
+      "\nfor aesthetics, rest, and care.",
+      "\n\nNot excessive, yet never lacking —\nfor a clear and refined atmosphere.",
+      "\n\nWe set the standard of ", ["em", "consistent care"],
+      ",\nnot a single procedure.",
     ],
     cards: [
       {
