@@ -16,3 +16,10 @@ mockup/
 
 # Claude
 .claude/
+
+# B안, C안 — 로컬 보관용 (배포 제외)
+web/claude design/ediv-b.html
+web/claude design/ediv-b/
+web/claude design/ediv-c.html
+web/claude design/ediv-c/
+web/claude design/styles-b.css
